@@ -60,8 +60,18 @@ class SessionManager:
         conn = sqlite3.connect(self.db_path)
         try:
             # SQLiteからuser_idを元にセッションを取得
+            query = (
+                "SELECT "
+                "  user_id, "
+                "  session_id, "
+                "  csrf_token, "
+                "  access_token, "
+                "  refresh_token, "
+                "  token_expires_at "
+                "FROM " + self.table_name + " WHERE user_id = ?"
+            )
             cur = conn.execute(
-                f"SELECT user_id, session_id, csrf_token, access_token, refresh_token, token_expires_at FROM {self.table_name} WHERE user_id = ?;",
+                query,
                 (user_id,),
             )
             row = cur.fetchone()
@@ -91,8 +101,15 @@ class SessionManager:
                 token_expires_at=None,
             )
             conn.execute(
-                f"INSERT INTO {self.table_name} "
-                "(user_id, session_id, csrf_token, access_token, refresh_token, token_expires_at) "
+                "INSERT INTO " + self.table_name + " "
+                "("
+                "  user_id, "
+                "  session_id, "
+                "  csrf_token, "
+                "  access_token, "
+                "  refresh_token, "
+                "  token_expires_at"
+                ") "
                 "VALUES (?, ?, ?, ?, ?, ?)",
                 (
                     session.user_id,
@@ -114,7 +131,15 @@ class SessionManager:
         try:
             # SQLiteからcsrf_tokenを元にセッションを取得
             cur = conn.execute(
-                f"SELECT user_id, session_id, csrf_token, access_token, refresh_token, token_expires_at FROM {self.table_name} WHERE csrf_token = ?",
+                "SELECT "
+                "  user_id, "
+                "  session_id, "
+                "  csrf_token, "
+                "  access_token, "
+                "  refresh_token, "
+                "  token_expires_at "
+                "FROM " + self.table_name + " "
+                "WHERE csrf_token = ?",
                 (csrf_token,),
             )
             row = cur.fetchone()
@@ -210,7 +235,7 @@ class SessionManager:
         conn = sqlite3.connect(self.db_path)
         try:
             conn.execute(
-                f"UPDATE {self.table_name} SET csrf_token = ? WHERE user_id = ?",
+                "UPDATE " + self.table_name + " SET csrf_token = ? WHERE user_id = ? ",
                 (
                     csrf_token,
                     user_id,
@@ -276,7 +301,12 @@ class SessionManager:
         conn = sqlite3.connect(self.db_path)
         try:
             conn.execute(
-                f"UPDATE {self.table_name} SET access_token = ?, refresh_token = ?, token_expires_at = ? WHERE user_id = ?",
+                "UPDATE " + self.table_name + " "
+                "SET "
+                "  access_token = ?, "
+                "  refresh_token = ?, "
+                "  token_expires_at = ? "
+                "WHERE user_id = ?",
                 (
                     access_token,
                     refresh_token,
@@ -296,7 +326,13 @@ class SessionManager:
         conn = sqlite3.connect(self.db_path)
         try:
             conn.execute(
-                f"UPDATE {self.table_name} SET csrf_token = '', access_token = '', refresh_token = '', token_expires_at = '' WHERE user_id = ?",
+                "UPDATE " + self.table_name + " "
+                "SET "
+                "  csrf_token = '', "
+                "  access_token = '', "
+                "  refresh_token = '', "
+                "  token_expires_at = '' "
+                "WHERE user_id = ?",
                 (user_id,),
             )
             conn.commit()
