@@ -54,60 +54,6 @@ def redirect(
     redirect_url = session_manager.get_redirect_url(
         code=code, state=state, team_id=team_id
     )
-    # session = session_manager.get_session_by_csrf_token(state)
-    # if not session:
-    #     logger.error(
-    #         "[OAUTH2] /redirect: CSRF token mismatch or session not found",
-    #         extra={"state": state},
-    #     )
-    #     # return RedirectResponse("http://localhost:3000/signin?error=csrf")
-    # else:
-    #     logger.info(
-    #         "[OAUTH2] /redirect: CSRF token matched",
-    #         extra={"user_id": session.user_id, "csrf_token": session.csrf_token},
-    #     )
-    # storage = (
-    #     isinstance(session, Session) and InMemoryStorage().set(session.token)
-    # ) or InMemoryStorage()
-    # # logger.info(f"{type(storage)}")
-    # miro = Miro(
-    #     client_id=settings.MIRO_CLIENT_ID,
-    #     client_secret=settings.MIRO_CLIENT_SECRET,
-    #     redirect_url=settings.MIRO_REDIRECT_URI,
-    #     storage=storage,
-    # )
-    # access_token = miro.exchange_code_for_access_token(code)
-    # if not state:
-    #     return RedirectResponse(
-    #         f"https://miro.com/app-install-completed?client_id={settings.MIRO_CLIENT_ID}&team_id={team_id}"
-    #     )
-
-    # query = Query()
-    # session_manager.db.update(
-    #     {"token": access_token}, query["user_id"] == session.user_id
-    # )
-    # logger.info("Access token received", extra={"access_token": access_token})
-    # clear_csrf_by_user_id(session.user_id)
-    # logger.info(
-    #     """
-    #     [OAUTH2] /redirect: team_id = %s
-    #     [OAUTH2] /redirect: session_id = %s
-    #     [OAUTH2] /redirect: csrf_token = %s
-    #     [OAUTH2] /redirect: access_token = %s
-    #     [OAUTH2] /redirect: client_id = %s
-    #     """,
-    #     team_id,
-    #     session.session_id,
-    #     session.csrf_token,
-    #     access_token,
-    #     settings.MIRO_CLIENT_ID,
-    # )
-    # url = (
-    #     "https://miro.com/app-install-completed"
-    #     f"?client_id={settings.MIRO_CLIENT_ID}"
-    #     f"&team_id={team_id}"
-    # )
-    # url = "http://localhost:3000/auth/signed"
     return RedirectResponse(redirect_url)
 
 
@@ -116,7 +62,8 @@ def logout(
     response: Response, user_id: Annotated[str, Query(...)] = ""
 ) -> JSONResponse:
     """セッションを削除してログアウトするのだ."""
-    session = session_manager.find_sessions_by_user_id(user_id)
-    session.csrf_token = ""
-    session.storage = InMemoryStorage()
-    return JSONResponse({"message": "Logged out successfully"})
+    status = session_manager.clear_session(user_id)
+    # session = session_manager.find_sessions_by_user_id(user_id)
+    # session.csrf_token = ""
+    # session.storage = InMemoryStorage()
+    return JSONResponse({"message": "Logged out successfully", "status": str(status)})

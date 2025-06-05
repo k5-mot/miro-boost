@@ -41,11 +41,25 @@ const Signin: React.FC = () => {
       const { waitForClose } = await miro.board.ui.openModal<string, string>({
         data: "data",
         url: authUrl,
-        width: 600,
+        width: 900,
         height: 1200,
       });
-      console.log(await waitForClose());
-      // navigate("/miro");
+      await waitForClose()
+        .then(async () => {
+          console.info("Auth modal closed, checking auth status...");
+          const status = await fetchAuthStatus();
+          if (status) {
+            setIsAuthenticated(status);
+            console.log("User is authenticated.");
+            await navigate("/splash");
+          } else {
+            setIsAuthenticated(false);
+            console.log("User is not authenticated.");
+          }
+        })
+        .catch((error) => {
+          console.error("Error waiting for auth modal close:", error);
+        });
     } else {
       console.error("Failed to open auth url.");
     }

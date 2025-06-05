@@ -48,3 +48,17 @@ export const fetchAuthUrl = async (): Promise<string | undefined> => {
     return undefined;
   }
 };
+
+export const fetchLogout = async (): Promise<void> => {
+  try {
+    const userId = (await miro.board.getUserInfo()).id;
+    await fetch(
+      `${baseUrl}/api/oauth/refresh?user_id=${encodeURIComponent(userId)}`,
+      {
+        method: "POST",
+      }
+    );
+  } catch (e) {
+    console.error("logout error", e);
+  }
+};

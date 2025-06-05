@@ -36,7 +36,7 @@ const Miro: React.FC = () => {
             navigate("/auth/signin");
           }
         },
-        Math.max(0, 1000 - (Date.now() - start))
+        Math.max(0, 500 - (Date.now() - start))
       );
     };
     run();

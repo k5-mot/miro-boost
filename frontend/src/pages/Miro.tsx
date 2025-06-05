@@ -3,9 +3,10 @@ import { Container, Center } from "../../styled-system/jsx";
 import { Accordion, AccordionGroup, Button, Divider } from "@serendie/ui";
 import { SerendieSymbolVerifiedBadge } from "@serendie/symbols";
 import { useNavigate } from "react-router-dom";
-import { fetchAuthStatus } from "../api/oauth";
+import { fetchLogout } from "../api/oauth";
 
 import "../assets/style.css";
+import { log } from "console";
 
 /**
  * 付箋生成.
@@ -76,6 +77,20 @@ const Miro: React.FC = () => {
             isLeftIcon
           />
         </AccordionGroup>
+        <Button
+          onClick={async () => {
+            await fetchLogout()
+              .then(async () => {
+                console.info("Logged out successfully.");
+                await miro.board.ui.closePanel();
+              })
+              .catch((error) => {
+                console.error("Logout failed:", error);
+              });
+          }}
+        >
+          REFRESH
+        </Button>
       </Center>
     </Container>
   );

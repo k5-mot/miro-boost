@@ -1,20 +1,27 @@
 import * as React from "react";
 import { useEffect } from "react";
 import { Container, Flex } from "../../../styled-system/jsx";
-
+import { ProgressIndicator } from "@serendie/ui";
 import "../../assets/style.css";
 
 const Signed: React.FC = () => {
   useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+    const start = Date.now();
+
     const fetchAuthUrl = async () => {
       // 認証後、3秒待機した後、モーダルを閉じる
-      const timeoutId = setTimeout(() => {
-        (async () => {
-          await miro.board.ui.closeModal();
-        })();
-      }, 3000);
+      timeoutId = setTimeout(
+        () => {
+          (async () => {
+            await miro.board.ui.closeModal();
+          })();
+        },
+        Math.max(0, 2000 - (Date.now() - start))
+      );
     };
     fetchAuthUrl();
+    return () => clearTimeout(timeoutId);
   }, []);
 
   return (
@@ -58,6 +65,7 @@ const Signed: React.FC = () => {
             }}
           />
           <h4>Completed to install</h4>
+          <ProgressIndicator size="medium" color="white" />
         </Flex>
       </Flex>
     </Container>

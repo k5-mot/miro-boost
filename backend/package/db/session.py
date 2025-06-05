@@ -20,8 +20,8 @@ class Session(BaseModel):
     session_id: str = Field(default="")
     csrf_token: str = Field(default="")
     access_token: str = Field(default="")
-    refresh_token: str = Field(default="")
-    token_expires_at: datetime.datetime = Field(default_factory=datetime.datetime.now)
+    refresh_token: str | None = Field(default=None)
+    token_expires_at: datetime.datetime | None = Field(default=None)
 
     model_config = {"arbitrary_types_allowed": True}
 
@@ -74,17 +74,21 @@ class SessionManager:
                     session_id=row[1],
                     csrf_token=row[2],
                     access_token=row[3],
-                    refresh_token=row[4],
-                    token_expires_at=datetime.datetime.fromisoformat(row[5]),
+                    refresh_token=row[4] or None,
+                    token_expires_at=datetime.datetime.fromisoformat(row[5])
+                    if row[5]
+                    else None,  # naiveなdatetimeを使用
                 )
             # 取得できなければ、新規作成.
+            # 新規セッションを作成する場合は、token_expires_atはNoneにする
+            # (Miroライブラリが内部でnaiveなdatetimeを使うため)
             session = Session(
                 user_id=user_id,
                 session_id=str(uuid.uuid4()),
                 csrf_token="",
                 access_token="",
-                refresh_token="",
-                token_expires_at=datetime.datetime.now(tz=datetime.UTC),
+                refresh_token=None,
+                token_expires_at=None,
             )
             conn.execute(
                 f"INSERT INTO {self.table_name} "
@@ -94,9 +98,9 @@ class SessionManager:
                     session.user_id,
                     session.session_id,
                     session.csrf_token,
-                    session.access_token,
-                    session.refresh_token,
-                    session.token_expires_at,
+                    "",
+                    "",
+                    "",
                 ),
             )
             conn.commit()
@@ -120,13 +124,23 @@ class SessionManager:
                 return None
 
             # 取得できれば、セッションを返す.
+            token_expires_at = None
+            if row[5]:
+                # naiveなdatetimeとして取得する
+                dt = datetime.datetime.fromisoformat(row[5])
+                # もしタイムゾーン情報があれば、削除する
+                if dt.tzinfo is not None:
+                    token_expires_at = dt.replace(tzinfo=None)
+                else:
+                    token_expires_at = dt
+
             return Session(
                 user_id=row[0],
                 session_id=row[1],
                 csrf_token=row[2],
                 access_token=row[3],
                 refresh_token=row[4],
-                token_expires_at=datetime.datetime.fromisoformat(row[5]),
+                token_expires_at=token_expires_at,
             )
         finally:
             conn.close()
@@ -134,22 +148,60 @@ class SessionManager:
     def get_miro_client(self, user_id: str) -> Miro:
         """指定したuser_idのMiroクライアントを取得."""
         session = self.get_session_by_user_id(user_id)
+        logger.debug("user_id: %s", user_id)
+        logger.debug("access_token: %s", session.access_token)
+        logger.debug("refresh_token: %s", session.refresh_token)
+        logger.debug("token_expires_at: %s", session.token_expires_at)
+
+        # 有効なアクセストークンが存在する場合のみStateを作成
+        if session.access_token:
+            # token_expires_atをnaiveな状態にする
+            expires_at = None
+            if session.token_expires_at:
+                # token_expires_atがawareの場合、naiveにする
+                if session.token_expires_at.tzinfo is not None:
+                    # タイムゾーン情報を削除して純粋な日時だけにする
+                    expires_at = session.token_expires_at.replace(tzinfo=None)
+                else:
+                    expires_at = session.token_expires_at
+
+            state = State(
+                access_token=session.access_token,
+                refresh_token=session.refresh_token or None,
+                token_expires_at=expires_at,
+            )
+            storage = InMemoryStorage()
+            storage.set(state=state)
+            logger.debug("state: %s", state)
+            logger.debug("Storage: %s", storage)
+
+            # Miroクライアントを作成して返す
+            miro = Miro(
+                client_id=settings.MIRO_CLIENT_ID,
+                client_secret=settings.MIRO_CLIENT_SECRET,
+                redirect_url=settings.MIRO_REDIRECT_URI,
+                storage=storage,
+            )
+
+            # アクセストークンが設定されていることを確認
+            logger.debug("miro.access_token: %s", miro.access_token)
+            logger.debug("miro.is_authorized: %s", miro.is_authorized)
+
+            return miro
+
+        # アクセストークンがない場合は空のストレージでクライアントを作成
+        storage = InMemoryStorage()
         return Miro(
             client_id=settings.MIRO_CLIENT_ID,
             client_secret=settings.MIRO_CLIENT_SECRET,
             redirect_url=settings.MIRO_REDIRECT_URI,
-            storage=InMemoryStorage().set(
-                State(
-                    access_token=session.access_token,
-                    refresh_token=session.refresh_token,
-                    token_expires_at=session.token_expires_at,
-                )
-            ),
+            storage=storage,
         )
 
     def get_authentication_status(self, user_id: str) -> bool:
         """指定したuser_idの認証ステータスを取得."""
         miro = self.get_miro_client(user_id)
+        logger.debug("status: %s", miro.is_authorized)
         return miro.is_authorized
 
     def get_authentication_url(self, user_id: str) -> str:
@@ -158,7 +210,7 @@ class SessionManager:
         conn = sqlite3.connect(self.db_path)
         try:
             conn.execute(
-                f"UPDATE {self.table_name} SET csrf_token = ?, access_token = '', refresh_token = '', token_expires_at = '' WHERE user_id = ?",
+                f"UPDATE {self.table_name} SET csrf_token = ? WHERE user_id = ?",
                 (
                     csrf_token,
                     user_id,
@@ -201,7 +253,41 @@ class SessionManager:
         # ここで取得したアクセストークンは、REST APIの呼び出しに使用する.
         session = self.get_session_by_csrf_token(state)
         miro = self.get_miro_client(session.user_id)
+
+        logger.debug("user_id: %s", session.user_id)
         miro.exchange_code_for_access_token(code)
+
+        logger.debug("access_token: %s", miro.access_token)
+        logger.debug("refresh_token: %s", miro._storage.get().refresh_token)
+        logger.debug("token_expires_at: %s", miro._storage.get().token_expires_at)
+
+        # アクセストークンの保存のために、必要な情報を取得
+        access_token = miro.access_token
+        refresh_token = miro._storage.get().refresh_token or ""
+
+        # トークンの有効期限をnaiveな状態で扱う
+        token_expires_at = ""
+        if miro._storage.get().token_expires_at:
+            # タイムゾーン情報を無視して日時だけを保存
+            # 既にnaiveならそのまま、awareならタイムゾーン情報を削除する
+            naive_expires_at = miro._storage.get().token_expires_at.replace(tzinfo=None)
+            token_expires_at = naive_expires_at.isoformat()
+
+        conn = sqlite3.connect(self.db_path)
+        try:
+            conn.execute(
+                f"UPDATE {self.table_name} SET access_token = ?, refresh_token = ?, token_expires_at = ? WHERE user_id = ?",
+                (
+                    access_token,
+                    refresh_token,
+                    token_expires_at,
+                    session.user_id,
+                ),
+            )
+            conn.commit()
+        finally:
+            conn.close()
+
         # Miroアプリのサインイン完了ページ.
         return f"{settings.FRONTEND_URL}/auth/signed"
 
