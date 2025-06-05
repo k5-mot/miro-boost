@@ -8,7 +8,7 @@ from miro_api.miro_api_wrapper import Miro
 from miro_api.storage import InMemoryStorage, Storage
 from pydantic import BaseModel, Field
 
-from package.db.session import SessionManager
+from package.db.session import Session, SessionManager
 from package.util import get_logger, get_settings
 
 settings = get_settings()
@@ -25,7 +25,7 @@ def status(user_id: Annotated[str, Query(...)] = "") -> dict:
     session = session_manager.get_session_by_user_id(user_id)
     return {
         "user_id": session.user_id,
-        "status": session_manager.get_auth_status(user_id),
+        "status": session_manager.get_authentication_status(user_id),
         "session_id": session.session_id,
         "csrf_token": session.csrf_token,
     }
@@ -36,11 +36,11 @@ def authorize(
     response: Response, user_id: Annotated[str, Query(...)] = ""
 ) -> JSONResponse:
     """セッションを確立し、Miro OAuth画面の認証URLを返す."""
-    session = session_manager.get_session_by_user_id(user_id)
-    auth_url = session_manager.get_auth_url(user_id)
-    response.set_cookie(
-        key="session_id", value=session.session_id, httponly=True, samesite="lax"
-    )
+    # session = session_manager.get_session_by_user_id(user_id)
+    auth_url = session_manager.get_authentication_url(user_id)
+    # response.set_cookie(
+    #     key="session_id", value=session.session_id, httponly=True, samesite="lax"
+    # )
     return JSONResponse({"url": auth_url})
 
 
@@ -51,47 +51,64 @@ def redirect(
     team_id: str = "",
 ) -> RedirectResponse:
     """Miroからのリダイレクトを受けてアクセストークンを取得する."""
-    session = session_manager.get_session_by_csrf_token(state)
-    if not session:
-        logger.error(
-            "[OAUTH2] /redirect: CSRF token mismatch or session not found",
-            extra={"state": state},
-        )
-        return RedirectResponse("http://localhost:3000/signin?error=csrf")
-    logger.info(
-        "[OAUTH2] /redirect: CSRF token matched",
-        extra={"user_id": session.user_id, "csrf_token": session.csrf_token},
+    redirect_url = session_manager.get_redirect_url(
+        code=code, state=state, team_id=team_id
     )
-    miro = Miro(
-        client_id=settings.MIRO_CLIENT_ID,
-        client_secret=settings.MIRO_CLIENT_SECRET,
-        redirect_url=settings.MIRO_REDIRECT_URI,
-        storage=session.storage,
-    )
-    access_token = miro.exchange_code_for_access_token(code)
+    # session = session_manager.get_session_by_csrf_token(state)
+    # if not session:
+    #     logger.error(
+    #         "[OAUTH2] /redirect: CSRF token mismatch or session not found",
+    #         extra={"state": state},
+    #     )
+    #     # return RedirectResponse("http://localhost:3000/signin?error=csrf")
+    # else:
+    #     logger.info(
+    #         "[OAUTH2] /redirect: CSRF token matched",
+    #         extra={"user_id": session.user_id, "csrf_token": session.csrf_token},
+    #     )
+    # storage = (
+    #     isinstance(session, Session) and InMemoryStorage().set(session.token)
+    # ) or InMemoryStorage()
+    # # logger.info(f"{type(storage)}")
+    # miro = Miro(
+    #     client_id=settings.MIRO_CLIENT_ID,
+    #     client_secret=settings.MIRO_CLIENT_SECRET,
+    #     redirect_url=settings.MIRO_REDIRECT_URI,
+    #     storage=storage,
+    # )
+    # access_token = miro.exchange_code_for_access_token(code)
+    # if not state:
+    #     return RedirectResponse(
+    #         f"https://miro.com/app-install-completed?client_id={settings.MIRO_CLIENT_ID}&team_id={team_id}"
+    #     )
+
+    # query = Query()
+    # session_manager.db.update(
+    #     {"token": access_token}, query["user_id"] == session.user_id
+    # )
     # logger.info("Access token received", extra={"access_token": access_token})
     # clear_csrf_by_user_id(session.user_id)
-    logger.info(
-        """
-        [OAUTH2] /redirect: team_id = %s
-        [OAUTH2] /redirect: session_id = %s
-        [OAUTH2] /redirect: csrf_token = %s
-        [OAUTH2] /redirect: access_token = %s
-        [OAUTH2] /redirect: client_id = %s
-        """,
-        team_id,
-        session.session_id,
-        session.csrf_token,
-        access_token,
-        settings.MIRO_CLIENT_ID,
-    )
+    # logger.info(
+    #     """
+    #     [OAUTH2] /redirect: team_id = %s
+    #     [OAUTH2] /redirect: session_id = %s
+    #     [OAUTH2] /redirect: csrf_token = %s
+    #     [OAUTH2] /redirect: access_token = %s
+    #     [OAUTH2] /redirect: client_id = %s
+    #     """,
+    #     team_id,
+    #     session.session_id,
+    #     session.csrf_token,
+    #     access_token,
+    #     settings.MIRO_CLIENT_ID,
+    # )
     # url = (
     #     "https://miro.com/app-install-completed"
     #     f"?client_id={settings.MIRO_CLIENT_ID}"
     #     f"&team_id={team_id}"
     # )
-    url = "http://localhost:3000/auth/2-signed"
-    return RedirectResponse(url)
+    # url = "http://localhost:3000/auth/signed"
+    return RedirectResponse(redirect_url)
 
 
 @router.post("/refresh")

@@ -12,7 +12,7 @@ const App: React.FC = () => {
       if (canOpenPanel) {
         setIsPanelOpen(true);
         miro.board.ui.on("icon:click", async () => {
-          await miro.board.ui.openPanel({ url: "/miro" });
+          await miro.board.ui.openPanel({ url: "/splash" });
         });
       }
     };

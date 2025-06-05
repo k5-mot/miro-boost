@@ -4,6 +4,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import App from "./pages/App";
 import Miro from "./pages/Miro";
 import Signin from "./pages/auth/Signin";
+import Signed from "./pages/auth/Signed";
+import Splash from "./pages/Splash";
 import MiroGroup from "./pages/miro/1-Group";
 
 const rootElement = document.getElementById("root");
@@ -14,7 +16,9 @@ if (rootElement) {
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/miro" element={<Miro />} />
+          <Route path="/splash" element={<Splash />} />
           <Route path="/auth/signin" element={<Signin />} />
+          <Route path="/auth/signed" element={<Signed />} />
           <Route path="/miro/group" element={<MiroGroup />} />
         </Routes>
       </BrowserRouter>

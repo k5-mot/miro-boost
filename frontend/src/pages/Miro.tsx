@@ -24,16 +24,7 @@ async function addSticky() {
 const Miro: React.FC = () => {
   const navigate = useNavigate();
 
-  React.useEffect(() => {
-    const fetch = async () => {
-      // 認証されていなければ、サインイン画面に遷移.
-      const status = await fetchAuthStatus();
-      if (!status) {
-        navigate("/auth/signin");
-      }
-    };
-    fetch();
-  }, []);
+  React.useEffect(() => {}, []);
 
   return (
     <Container
