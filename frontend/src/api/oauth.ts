@@ -19,6 +19,7 @@ export const fetchAuthStatus = async (): Promise<boolean | undefined> => {
       session_id?: string;
       csrf_token?: string;
     } = await response.json();
+    console.info("Fetch auth status response:", responseBody);
     return responseBody.status;
   } catch (e) {
     console.error("status fetch error", e);
@@ -40,9 +41,9 @@ export const fetchAuthUrl = async (): Promise<string | undefined> => {
       `${baseUrl}/api/oauth/authorize?user_id=${encodeURIComponent(userId)}&board_id=${encodeURIComponent(boardId)}`
     );
     const responseBody: {
-      url?: string;
+      auth_url?: string;
     } = await response.json();
-    return responseBody.url;
+    return responseBody.auth_url;
   } catch (e) {
     console.error("status fetch error", e);
     return undefined;
@@ -53,7 +54,7 @@ export const fetchLogout = async (): Promise<void> => {
   try {
     const userId = (await miro.board.getUserInfo()).id;
     await fetch(
-      `${baseUrl}/api/oauth/refresh?user_id=${encodeURIComponent(userId)}`,
+      `${baseUrl}/api/oauth/revoke?user_id=${encodeURIComponent(userId)}`,
       {
         method: "POST",
       }

@@ -2,9 +2,17 @@ import * as React from "react";
 import { Container, Center } from "../../../styled-system/jsx";
 import { Accordion, AccordionGroup, Button, Divider } from "@serendie/ui";
 import { SerendieSymbolVerifiedBadge } from "@serendie/symbols";
-import "../../assets/style.css";
 import { useNavigate } from "react-router-dom";
 
+import "../../assets/style.css";
+import "../../assets/title.css";
+
+/**
+ * 付箋生成.
+ *
+ * @async
+ * @returns {*}
+ */
 async function addSticky() {
   const stickyNote = await miro.board.createStickyNote({
     content: "Hello, World!",
@@ -47,17 +55,6 @@ const MiroGroup: React.FC = () => {
         <Button styleType="outlined" onClick={() => navigate("/miro")}>
           戻る
         </Button>
-
-        <Divider />
-
-        <AccordionGroup width="100%">
-          <Accordion
-            value=""
-            title="問い合わせ"
-            description="Accordion Description"
-            isLeftIcon
-          />
-        </AccordionGroup>
       </Center>
     </Container>
   );

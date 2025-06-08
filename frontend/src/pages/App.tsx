@@ -1,6 +1,7 @@
 import * as React from "react";
-import { ProgressIndicator } from "@serendie/ui";
+import { ProgressIndicator, Button } from "@serendie/ui";
 import { Container, Flex } from "../../styled-system/jsx";
+import { SerendieSymbolLink } from "@serendie/symbols";
 import "../assets/style.css";
 
 const App: React.FC = () => {
@@ -63,7 +64,18 @@ const App: React.FC = () => {
               <ProgressIndicator size="large" color="white" />
             </>
           ) : (
-            <h3>Miroではないようです...</h3>
+            <>
+              <h3>Miroではないようです...</h3>
+              <Button
+                styleType="filled"
+                size="medium"
+                leftIcon={<SerendieSymbolLink />}
+                onClick={() => window.open("https://miro.com/", "_blank")}
+                style={{ marginTop: "16px" }}
+              >
+                Miroに移動
+              </Button>
+            </>
           )}
         </Flex>
       </Flex>

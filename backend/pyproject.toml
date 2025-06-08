@@ -28,6 +28,15 @@ line-length = 88
 
 [tool.ruff.lint]
 ignore = [
+  # My hated rules
+  "AIR",    # Airflow
+  "ERA",    # eradicate
+  "D100",   # undocumented-public-module
+  "D101",   # undocumented-public-class
+  "D104",   # undocumented-public-package
+  "COM812",
+  "BLE",
+  "TRY",
   # The rule has been removed only the documentation is available.
   "ANN101",
   "ANN102",

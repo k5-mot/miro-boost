@@ -5,6 +5,7 @@ import App from "./pages/App";
 import Miro from "./pages/Miro";
 import Signin from "./pages/auth/Signin";
 import Signed from "./pages/auth/Signed";
+import Check from "./pages/auth/Check";
 import Splash from "./pages/Splash";
 import MiroGroup from "./pages/miro/1-Group";
 
@@ -19,6 +20,7 @@ if (rootElement) {
           <Route path="/splash" element={<Splash />} />
           <Route path="/auth/signin" element={<Signin />} />
           <Route path="/auth/signed" element={<Signed />} />
+          <Route path="/auth/check" element={<Check />} />
           <Route path="/miro/group" element={<MiroGroup />} />
         </Routes>
       </BrowserRouter>

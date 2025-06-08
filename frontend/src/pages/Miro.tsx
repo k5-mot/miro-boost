@@ -1,26 +1,14 @@
 import * as React from "react";
-import { Container, Center } from "../../styled-system/jsx";
-import { Accordion, AccordionGroup, Button, Divider } from "@serendie/ui";
-import { SerendieSymbolVerifiedBadge } from "@serendie/symbols";
+import { Container, Center, Wrap } from "../../styled-system/jsx";
+import { Button, Divider } from "@serendie/ui";
+import {
+  SerendieSymbolPlaceholder,
+  SerendieSymbolVerifiedBadge,
+} from "@serendie/symbols";
 import { useNavigate } from "react-router-dom";
-import { fetchLogout } from "../api/oauth";
 
 import "../assets/style.css";
-import { log } from "console";
-
-/**
- * 付箋生成.
- *
- * @async
- * @returns {*}
- */
-async function addSticky() {
-  const stickyNote = await miro.board.createStickyNote({
-    content: "Hello, World!",
-  });
-
-  await miro.board.viewport.zoomTo(stickyNote);
-}
+import "../assets/title.css";
 
 const Miro: React.FC = () => {
   const navigate = useNavigate();
@@ -39,58 +27,35 @@ const Miro: React.FC = () => {
       <Center flexDirection="column" width="100%" gap={8} paddingY={8}>
         <Center flexDirection="row" alignItems="center" gap={12}>
           <SerendieSymbolVerifiedBadge />
-          <h3>Welcome</h3>
+          <h3>Miro BOOST</h3>
         </Center>
         <Divider />
 
         <Center flexDirection="column" width="100%" gap={8} paddingY={8}>
           <h4>機能A群</h4>
-          <Button onClick={() => navigate("/miro/group")}>
-            付箋を追加するのだ！
-          </Button>
-          <Button onClick={() => addSticky()}>付箋を追加するのだ！</Button>
-          <Button onClick={() => addSticky()}>付箋を追加するのだ！</Button>
-          <Button onClick={() => addSticky()}>付箋を追加するのだ！</Button>
-          <Button onClick={() => addSticky()}>付箋を追加するのだ！</Button>
-          <Button onClick={() => addSticky()}>付箋を追加するのだ！</Button>
+          <Button onClick={() => navigate("/miro/group")}>付箋を追加</Button>
+          <Button onClick={() => {}}>placeholder</Button>
+          <Button onClick={() => {}}>placeholder</Button>
+          <Button onClick={() => {}}>placeholder</Button>
+          <Button onClick={() => {}}>placeholder</Button>
+          <Button onClick={() => {}}>placeholder</Button>
         </Center>
 
         <Divider />
 
         <Center flexDirection="column" width="100%" gap={8} paddingY={8}>
-          <h4>機能B群</h4>
-          <Button onClick={() => addSticky()}>付箋を追加するのだ！</Button>
-          <Button onClick={() => addSticky()}>付箋を追加するのだ！</Button>
-          <Button onClick={() => addSticky()}>付箋を追加するのだ！</Button>
-          <Button onClick={() => addSticky()}>付箋を追加するのだ！</Button>
-          <Button onClick={() => addSticky()}>付箋を追加するのだ！</Button>
-          <Button onClick={() => addSticky()}>付箋を追加するのだ！</Button>
+          <h4>お問い合わせ</h4>
+          <Wrap gap={12} align="center" justify="center">
+            <Button
+              leftIcon={<SerendieSymbolPlaceholder />}
+              size="small"
+              styleType="outlined"
+              onClick={() => navigate("/auth/check")}
+            >
+              トラブルシューティング
+            </Button>
+          </Wrap>
         </Center>
-
-        <Divider />
-
-        <AccordionGroup width="100%">
-          <Accordion
-            value=""
-            title="問い合わせ"
-            description="Accordion Description"
-            isLeftIcon
-          />
-        </AccordionGroup>
-        <Button
-          onClick={async () => {
-            await fetchLogout()
-              .then(async () => {
-                console.info("Logged out successfully.");
-                await miro.board.ui.closePanel();
-              })
-              .catch((error) => {
-                console.error("Logout failed:", error);
-              });
-          }}
-        >
-          REFRESH
-        </Button>
       </Center>
     </Container>
   );
