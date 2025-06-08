@@ -27,15 +27,27 @@ indent-width = 4
 line-length = 88
 
 [tool.ruff.lint]
-select = ["ALL"]
 ignore = [
-  "AIR",    # Airflow
-  "ERA",    # eradicate
-  "D100",   # undocumented-public-module
-  "D101",   # undocumented-public-class
-  "D104",   # undocumented-public-package
-  "COM812",
+  # The rule has been removed only the documentation is available.
+  "ANN101",
+  "ANN102",
+  "S410",
+  "PT004",
+  "PT005",
+  "E999",
+  "PGH001",
+  "PGH002",
+  "PLR1701",
+  "PLR1706",
+  "UP027",
+  "RUF011",
+  "RUF035",
+  "TRY200",
+  # The rule has been deprecated and will be removed in a future release.
+  "S320",
+  "UP038",
 ]
+select = ["ALL"]
 fixable = ["ALL"]
 unfixable = [
   "F401", # unused-import
@@ -48,16 +60,20 @@ max-complexity = 10 # maximum complexity
 [tool.ruff.lint.pydocstyle]
 convention = "google" # docstring style
 
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = [
+  "F401", # unused-import
+]
+"tests/*" = [
+  "S101",   # Use of `assert` detected
+  "FBT001", # Boolean-typed positional argument in function definition
+]
+
 [tool.ruff.format]
 docstring-code-format = true
 indent-style = "space"
 line-ending = "lf"
 quote-style = "double"
-
-[tool.ruff.lint.per-file-ignores]
-"__init__.py" = [
-  "F401", # unused-import
-]
 
 [tool.pyright]
 typeCheckingMode = "basic"
