@@ -23,7 +23,9 @@ const Miro: React.FC = () => {
           // 認証ステータスを確認する.
           let isAuthenticated: boolean | undefined = false;
           try {
-            isAuthenticated = await fetchAuthStatus();
+            const userId = (await miro.board.getUserInfo()).id;
+            const boardId = (await miro.board.getInfo()).id;
+            isAuthenticated = await fetchAuthStatus(userId, boardId);
           } catch (e) {
             isAuthenticated = false;
           }
