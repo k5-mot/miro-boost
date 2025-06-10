@@ -32,6 +32,7 @@ const Signed: React.FC = () => {
         margin: 0,
         padding: 0,
         backgroundImage: 'url("/portrait_auth.svg")',
+        // backgroundImage: 'url("/src/assets/portrait_auth.svg")',
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
@@ -56,6 +57,7 @@ const Signed: React.FC = () => {
         >
           <img
             src="/congratulations.png"
+            // src="/src/assets/congratulations.png"
             alt=""
             style={{
               height: "50vh",
