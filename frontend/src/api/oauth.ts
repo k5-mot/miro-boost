@@ -6,10 +6,11 @@ const baseUrl = String(import.meta.env.VITE_PUBLIC_BACKEND_URL);
  * @async
  * @returns {*}
  */
-export const fetchAuthStatus = async (): Promise<boolean | undefined> => {
+export const fetchAuthStatus = async (
+  userId: string,
+  boardId: string
+): Promise<boolean | undefined> => {
   try {
-    const userId = (await miro.board.getUserInfo()).id;
-    const boardId = (await miro.board.getInfo()).id;
     const response = await fetch(
       `${baseUrl}/api/oauth/status?user_id=${encodeURIComponent(userId)}&board_id=${encodeURIComponent(boardId)}`
     );

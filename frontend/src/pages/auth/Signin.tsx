@@ -16,13 +16,16 @@ const Signin: React.FC = () => {
   const [userId, setUserId] = React.useState<string>("");
   const [boardId, setBoardId] = React.useState<string>("");
   const [isAuthenticated, setIsAuthenticated] = React.useState<boolean>(false);
+
   React.useEffect(() => {
     const setMiroInfo = async () => {
       setUserId((await miro.board.getUserInfo()).id);
       setBoardId((await miro.board.getInfo()).id);
     };
     const checkAuthStatus = async () => {
-      const status = await fetchAuthStatus();
+      const userId = (await miro.board.getUserInfo()).id;
+      const boardId = (await miro.board.getInfo()).id;
+      const status = await fetchAuthStatus(userId, boardId);
       if (status) {
         setIsAuthenticated(status);
       } else {
@@ -47,7 +50,9 @@ const Signin: React.FC = () => {
       await waitForClose()
         .then(async () => {
           console.info("Auth modal closed, checking auth status...");
-          const status = await fetchAuthStatus();
+          const userId = (await miro.board.getUserInfo()).id;
+          const boardId = (await miro.board.getInfo()).id;
+          const status = await fetchAuthStatus(userId, boardId);
           if (status) {
             setIsAuthenticated(status);
             console.log("User is authenticated.");
