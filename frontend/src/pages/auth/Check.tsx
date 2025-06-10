@@ -26,7 +26,9 @@ const Check: React.FC = () => {
       setBoardId((await miro.board.getInfo()).id);
     };
     const checkAuthStatus = async () => {
-      const status = await fetchAuthStatus();
+      const userId = (await miro.board.getUserInfo()).id;
+      const boardId = (await miro.board.getInfo()).id;
+      const status = await fetchAuthStatus(userId, boardId);
       if (status) {
         setIsAuthenticated(status);
       } else {
