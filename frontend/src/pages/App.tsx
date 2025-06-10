@@ -27,7 +27,7 @@ const App: React.FC = () => {
         height: "100vh",
         margin: 0,
         padding: 0,
-        backgroundImage: 'url("/src/assets/landscape.svg")',
+        backgroundImage: 'url("/landscape.svg")',
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
@@ -49,7 +49,7 @@ const App: React.FC = () => {
           }}
         >
           <img
-            src="/src/assets/congratulations.png"
+            src="/congratulations.png"
             alt=""
             style={{
               height: "50vh",

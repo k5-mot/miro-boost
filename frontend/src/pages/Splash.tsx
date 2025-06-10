@@ -50,7 +50,7 @@ const Miro: React.FC = () => {
         height: "100vh",
         margin: 0,
         padding: 0,
-        backgroundImage: 'url("/src/assets/portrait.svg")',
+        backgroundImage: 'url("/portrait.svg")',
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}

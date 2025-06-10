@@ -72,7 +72,7 @@ const Signin: React.FC = () => {
         height: "100vh",
         margin: 0,
         padding: 0,
-        backgroundImage: 'url("/src/assets/portrait_auth.svg")',
+        backgroundImage: 'url("/portrait_auth.svg")',
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
