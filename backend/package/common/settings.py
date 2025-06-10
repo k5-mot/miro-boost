@@ -39,7 +39,7 @@ def get_settings() -> Settings:
 if __name__ == "__main__":
     import json
 
-    from package.util.logger import get_logger
+    from package.common.logger import get_logger
 
     settings = get_settings()
     logger = get_logger()

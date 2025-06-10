@@ -1,9 +1,9 @@
 from miro_api.miro_api_wrapper import Miro
 from miro_api.storage import InMemoryStorage
 
+from package.common.logger import get_logger
+from package.common.settings import get_settings
 from package.db.sqlite_storage import SQLiteStorage
-from package.util.logger import get_logger
-from package.util.settings import get_settings
 
 settings = get_settings()
 logger = get_logger()

@@ -3,8 +3,8 @@ from typing import Annotated
 from fastapi import APIRouter, Query
 from fastapi.responses import JSONResponse, RedirectResponse
 
+from package.common import get_logger, get_settings
 from package.db.session import SessionManager
-from package.util import get_logger, get_settings
 
 settings = get_settings()
 logger = get_logger()
@@ -19,7 +19,11 @@ def status(user_id: Annotated[str, Query(...)] = "") -> dict:
     status = session_manager.get_auth_status(user_id)
     session = session_manager.get_session(user_id)
     logger.info(
-        f"User ID: {user_id}, Status: {status}, Session ID: {session.get('session_id', '')}"
+        "user_id: %s, status: %s, session_id: %s, csrf_token: %s",
+        user_id,
+        status,
+        session.get("session_id", ""),
+        session.get("csrf_token", ""),
     )
     return {
         "user_id": user_id,
@@ -36,7 +40,11 @@ def authorize(
 ) -> JSONResponse:
     """ユーザーセッションの認証・認可リクエストURLを取得."""
     auth_url = session_manager.get_auth_url(user_id=user_id, team_id=team_id)
-    logger.info(f"User ID: {user_id}, Auth URL: {auth_url}")
+    logger.info(
+        "user_id: %s, auth_url: %s",
+        user_id,
+        auth_url,
+    )
     return JSONResponse({"auth_url": auth_url})
 
 
@@ -53,7 +61,11 @@ def redirect(
         team_id=team_id,
     )
     logger.info(
-        f"code: {code}, state: {state}, team_id: {team_id}, redirect_url: {redirect_url}"
+        "code: %s, state: %s, team_id: %s, redirect_url: %s",
+        code,
+        state,
+        team_id,
+        redirect_url,
     )
     return RedirectResponse(redirect_url)
 
@@ -64,7 +76,11 @@ def revoke(
 ) -> JSONResponse:
     """ユーザーセッションの認証・認可を削除."""
     status = session_manager.revoke_auth(user_id)
-    logger.info(f"User ID: {user_id}, Revoke Status: {status}")
+    logger.info(
+        "user_id: %s, revoke_status: %s",
+        user_id,
+        status,
+    )
     return JSONResponse({"status": status})
 
 
@@ -74,5 +90,9 @@ def refresh(
 ) -> JSONResponse:
     """ユーザーセッションの認証・認可を更新."""
     status = session_manager.refresh_auth(user_id)
-    logger.info(f"User ID: {user_id}, Refresh Status: {status}")
+    logger.info(
+        "user_id: %s, refresh_status: %s",
+        user_id,
+        status,
+    )
     return JSONResponse({"status": status})

@@ -6,7 +6,7 @@ import uuid
 from miro_api.storage import State, Storage
 from pydantic import BaseModel, Field
 
-from package.util.logger import get_logger
+from package.common.logger import get_logger
 
 SQLITE_PATH = "./db/user_sessions.sqlite3"
 logger = get_logger()
@@ -165,20 +165,6 @@ class SQLiteStorage(Storage):
     def _update_session(self, state: State) -> None:
         """ユーザーセッションを更新."""
         conn = sqlite3.connect(SQLITE_PATH)
-
-        logger.debug(f"user_id: {self.user_id}")
-        logger.debug(f"state.access_token: {state.access_token}")
-        logger.debug(f"state.refresh_token: {state.refresh_token or ''}")
-        logger.debug(
-            f"state.token_expires_at: {
-                (
-                    # datetime型をISO形式文字列に変換.
-                    (state.token_expires_at and state.token_expires_at.isoformat())
-                    or ''
-                )
-            }"
-        )
-
         try:
             conn.execute(
                 """
@@ -207,12 +193,6 @@ class SQLiteStorage(Storage):
     def set(self, state: State) -> None:
         """ユーザーのセッション状態を保存."""
         # 指定されたuser_idのユーザーセッション情報を取得.
-
-        logger.debug(f"user_id: {self.user_id}")
-        logger.debug(f"state.access_token: {state.access_token}")
-        logger.debug(f"state.refresh_token: {state.refresh_token}")
-        logger.debug(f"state.token_expires_at: {state.token_expires_at}")
-
         record = self.get_session()
 
         # レコードが存在しない場合、新規作成.
