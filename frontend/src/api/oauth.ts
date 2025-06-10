@@ -34,10 +34,11 @@ export const fetchAuthStatus = async (
  * @async
  * @returns {unknown}
  */
-export const fetchAuthUrl = async (): Promise<string | undefined> => {
+export const fetchAuthUrl = async (
+  userId: string,
+  boardId: string
+): Promise<string | undefined> => {
   try {
-    const userId = (await miro.board.getUserInfo()).id;
-    const boardId = (await miro.board.getInfo()).id;
     const response = await fetch(
       `${baseUrl}/api/oauth/authorize?user_id=${encodeURIComponent(userId)}&board_id=${encodeURIComponent(boardId)}`
     );

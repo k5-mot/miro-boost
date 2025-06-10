@@ -38,7 +38,9 @@ const Signin: React.FC = () => {
 
   const openAuthModal = async () => {
     console.log("Opening auth modal...");
-    const authUrl = await fetchAuthUrl();
+    const userId = (await miro.board.getUserInfo()).id;
+    const boardId = (await miro.board.getInfo()).id;
+    const authUrl = await fetchAuthUrl(userId, boardId);
     console.log(`authUrl: ${authUrl}`);
     if (authUrl) {
       const { waitForClose } = await miro.board.ui.openModal<string, string>({
