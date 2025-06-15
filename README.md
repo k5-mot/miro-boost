@@ -2,6 +2,8 @@
 
 <!-- # Miro Speedtest -->
 
+[![Miro](https://brandfetch.com/miro.com?view=library&library=default&collection=logos&asset=idt40ywMhx&utm_source=https%253A%252F%252Fbrandfetch.com%252Fmiro.com&utm_medium=copyAction&utm_campaign=brandPageReferral)](https://miro.com/app-install/?response_type=code&client_id=3458764631372491152&redirect_uri=https%3A%2F%2Fmiro-boost.onrender.com%2Fapi%2Foauth%2Fredirect)
+
 ## 技術スタック
 
 - フロントエンド
@@ -24,12 +26,12 @@
 
 ## Screenshot
 
-![](./doc/readme/10-top.png)
-![](./doc/readme/11-config.png)
-![](./doc/readme/12-group.png)
-![](./doc/readme/13-task.png)
-![](./doc/readme/21-troubleshooting.png)
-![](./doc/readme/90-typography.png)
+<img width="200" alt="ファイル名" src="./doc/readme/10-top.png">
+<img width="200" alt="ファイル名" src="./doc/readme/11-config.png">
+<img width="200" alt="ファイル名" src="./doc/readme/12-group.png">
+<img width="200" alt="ファイル名" src="./doc/readme/13-task.png">
+<img width="200" alt="ファイル名" src="./doc/readme/21-troubleshooting.png">
+<img width="200" alt="ファイル名" src="./doc/readme/90-typography.png">
 
 ## Demo
 

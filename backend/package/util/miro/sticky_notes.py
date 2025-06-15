@@ -191,8 +191,7 @@ def post_grouped_sticky_notes(
                     connector_creation_data=ConnectorCreationData(
                         start_item=ItemConnectionCreationData(id=title_note.id),
                         end_item=ItemConnectionCreationData(id=group_note.id),
-                        shape="elbowed",  # 曲線コネクターを使用
-                        # shape="curved",  # 曲線コネクターを使用
+                        shape="curved",  # 曲線コネクターを使用
                         # "straight", "elbowed", "curved"
                         captions=[
                             Caption(content="categorized"),
