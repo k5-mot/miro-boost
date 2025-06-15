@@ -6,10 +6,11 @@ const baseUrl = String(import.meta.env.VITE_PUBLIC_BACKEND_URL);
  * @async
  * @returns {*}
  */
-export const fetchAuthStatus = async (): Promise<boolean | undefined> => {
+export const fetchAuthStatus = async (
+  userId: string,
+  boardId: string
+): Promise<boolean | undefined> => {
   try {
-    const userId = (await miro.board.getUserInfo()).id;
-    const boardId = (await miro.board.getInfo()).id;
     const response = await fetch(
       `${baseUrl}/api/oauth/status?user_id=${encodeURIComponent(userId)}&board_id=${encodeURIComponent(boardId)}`
     );
@@ -19,6 +20,7 @@ export const fetchAuthStatus = async (): Promise<boolean | undefined> => {
       session_id?: string;
       csrf_token?: string;
     } = await response.json();
+    console.info("Fetch auth status response:", responseBody);
     return responseBody.status;
   } catch (e) {
     console.error("status fetch error", e);
@@ -32,19 +34,34 @@ export const fetchAuthStatus = async (): Promise<boolean | undefined> => {
  * @async
  * @returns {unknown}
  */
-export const fetchAuthUrl = async (): Promise<string | undefined> => {
+export const fetchAuthUrl = async (
+  userId: string,
+  boardId: string
+): Promise<string | undefined> => {
   try {
-    const userId = (await miro.board.getUserInfo()).id;
-    const boardId = (await miro.board.getInfo()).id;
     const response = await fetch(
       `${baseUrl}/api/oauth/authorize?user_id=${encodeURIComponent(userId)}&board_id=${encodeURIComponent(boardId)}`
     );
     const responseBody: {
-      url?: string;
+      auth_url?: string;
     } = await response.json();
-    return responseBody.url;
+    return responseBody.auth_url;
   } catch (e) {
     console.error("status fetch error", e);
     return undefined;
+  }
+};
+
+export const fetchLogout = async (): Promise<void> => {
+  try {
+    const userId = (await miro.board.getUserInfo()).id;
+    await fetch(
+      `${baseUrl}/api/oauth/revoke?user_id=${encodeURIComponent(userId)}`,
+      {
+        method: "POST",
+      }
+    );
+  } catch (e) {
+    console.error("logout error", e);
   }
 };

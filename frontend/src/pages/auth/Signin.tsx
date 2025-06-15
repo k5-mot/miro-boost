@@ -1,18 +1,77 @@
-import * as React from "react";
-import { Container, Center } from "../../../styled-system/jsx";
-import { Accordion, AccordionGroup, Button, Divider } from "@serendie/ui";
-import { SerendieSymbolVerifiedBadge } from "@serendie/symbols";
+import React from "react";
+import { Button, List, ListItem } from "@serendie/ui";
 import { useNavigate } from "react-router-dom";
-import { fetchAuthUrl } from "../../api/oauth";
-import "../../assets/style.css";
+import { fetchAuthUrl, fetchAuthStatus } from "@/api/oauth";
+import { Container, Flex } from "@styled-system/jsx";
+import {
+  SerendieSymbolUser,
+  SerendieSymbolClipboard,
+  SerendieSymbolCheckCircle,
+} from "@serendie/symbols";
+import "@/assets/style.css";
+import { Headline, Body } from "@/styles";
 
-const Miro: React.FC = () => {
+const Signin: React.FC = () => {
   const navigate = useNavigate();
-  React.useEffect(() => {
-    const authUrl = fetchAuthUrl();
+  const [userId, setUserId] = React.useState<string>("");
+  const [boardId, setBoardId] = React.useState<string>("");
+  const [isAuthenticated, setIsAuthenticated] = React.useState<boolean>(false);
 
-    // 認証されていなければ、サインイン画面に遷移.
+  React.useEffect(() => {
+    const setMiroInfo = async () => {
+      setUserId((await miro.board.getUserInfo()).id);
+      setBoardId((await miro.board.getInfo()).id);
+    };
+    const checkAuthStatus = async () => {
+      const userId = (await miro.board.getUserInfo()).id;
+      const boardId = (await miro.board.getInfo()).id;
+      const status = await fetchAuthStatus(userId, boardId);
+      if (status) {
+        setIsAuthenticated(status);
+      } else {
+        setIsAuthenticated(false);
+      }
+    };
+    setMiroInfo();
+    checkAuthStatus();
   }, []);
+
+  const openAuthModal = async () => {
+    console.log("Opening auth modal...");
+    const userId = (await miro.board.getUserInfo()).id;
+    const boardId = (await miro.board.getInfo()).id;
+    const authUrl = await fetchAuthUrl(userId, boardId);
+    console.log(`authUrl: ${authUrl}`);
+    if (authUrl) {
+      const { waitForClose } = await miro.board.ui.openModal<string, string>({
+        data: "data",
+        url: authUrl,
+        width: 900,
+        height: 1200,
+      });
+      await waitForClose()
+        .then(async () => {
+          console.info("Auth modal closed, checking auth status...");
+          const userId = (await miro.board.getUserInfo()).id;
+          const boardId = (await miro.board.getInfo()).id;
+          const status = await fetchAuthStatus(userId, boardId);
+          if (status) {
+            setIsAuthenticated(status);
+            console.log("User is authenticated.");
+            await navigate("/splash");
+          } else {
+            setIsAuthenticated(false);
+            console.log("User is not authenticated.");
+          }
+        })
+        .catch((error) => {
+          console.error("Error waiting for auth modal close:", error);
+        });
+    } else {
+      console.error("Failed to open auth url.");
+    }
+  };
+
   return (
     <Container
       style={{
@@ -20,34 +79,75 @@ const Miro: React.FC = () => {
         height: "100vh",
         margin: 0,
         padding: 0,
+        backgroundImage: 'url("/portrait_auth.svg")',
+        overflow: "auto",
+        // backgroundImage: 'url("/src/assets/portrait_auth.svg")',
+        backgroundSize: "cover",
+        backgroundPosition: "center",
       }}
     >
-      <Center flexDirection="column" width="100%" gap={8} paddingY={8}>
-        <Center flexDirection="row" alignItems="center" gap={12}>
-          <SerendieSymbolVerifiedBadge />
-          <h3>Signin</h3>
-        </Center>
-        <Divider />
-
-        <Center flexDirection="column" width="100%" gap={8} paddingY={8}>
-          <h4>機能A群</h4>
-          <Button onClick={() => navigate("/miro/group")}>
-            付箋を追加するのだ！
+      <Flex
+        width="100%"
+        height="100%"
+        gap={8}
+        direction="column"
+        align="center"
+        justify="center"
+      >
+        <Flex
+          width="90%"
+          direction="column"
+          align="center"
+          style={{
+            borderRadius: "64px",
+            backdropFilter: "blur(128px)",
+            padding: "16px",
+          }}
+        >
+          <Headline variant="small">認証が必要です</Headline>
+          <Body variant="small">
+            このアプリを使用するには、認証が必要です。
+          </Body>
+          <Body variant="small">
+            認証を行うには、下のボタンをクリックしてください。
+          </Body>
+          <Button
+            styleType="filled"
+            color="primary"
+            style={{ margin: 8 }}
+            onClick={() => openAuthModal()}
+          >
+            Miro 認証
           </Button>
-        </Center>
-
-        <Divider />
-
-        <AccordionGroup width="100%">
-          <Accordion
-            value=""
-            title="問い合わせ"
-            description="Accordion Description"
-            isLeftIcon
-          />
-        </AccordionGroup>
-      </Center>
+        </Flex>
+        <Flex
+          width="90%"
+          direction="column"
+          align="center"
+          style={{
+            backgroundColor: "rgba(255, 255, 255, 0.5)",
+            borderRadius: "32px",
+            backdropFilter: "blur(128px)",
+            padding: "4px",
+          }}
+        >
+          <List>
+            <ListItem
+              title={`UserID: ${userId}`}
+              leftIcon={<SerendieSymbolUser name={"placeholder"} />}
+            />
+            <ListItem
+              title={`BoardID: ${boardId}`}
+              leftIcon={<SerendieSymbolClipboard name={"placeholder"} />}
+            />
+            <ListItem
+              title={`Status: ${isAuthenticated}`}
+              leftIcon={<SerendieSymbolCheckCircle name={"placeholder"} />}
+            />
+          </List>
+        </Flex>
+      </Flex>
     </Container>
   );
 };
-export default Miro;
+export default Signin;

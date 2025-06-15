@@ -5,7 +5,7 @@
   "scripts": {
     "panda": "panda",
     "prepare": "panda codegen",
-    "start": "vite --host --debug",
+    "dev": "vite --host",
     "build": "vite build",
     "serve": "vite preview"
   },
@@ -14,19 +14,20 @@
     "@serendie/symbols": "^1.0.1",
     "@serendie/ui": "^1.0.1",
     "mirotone": "5",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^7.6.1"
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.6.2"
   },
   "devDependencies": {
-    "@eslint/js": "^9.28.0",
+    "@eslint/js": "^9.29.0",
     "@mirohq/websdk-types": "latest",
-    "@pandacss/dev": "^0.53.7",
-    "@types/node": "^18.8.2",
-    "@types/react": "^18.0.24",
-    "@types/react-dom": "^18.0.8",
-    "@vitejs/plugin-react": "^4.5.0",
-    "eslint": "^9.28.0",
+    "@pandacss/dev": "^0.54.0",
+    "@pandacss/eslint-plugin": "^0.2.11",
+    "@types/node": "^24.0.1",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^4.5.2",
+    "eslint": "^9.29.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-react": "^7.37.5",
@@ -34,9 +35,10 @@
     "eslint-plugin-react-refresh": "^0.4.20",
     "eslint-plugin-unused-imports": "^4.1.4",
     "globals": "^16.2.0",
+    "npm-check-updates": "^18.0.1",
     "prettier": "^3.5.3",
-    "typescript": "4.9.5",
-    "typescript-eslint": "^8.33.0",
+    "typescript": "5.8.3",
+    "typescript-eslint": "^8.34.0",
     "vite": "^6.3.5",
     "vite-tsconfig-paths": "^5.1.4"
   }

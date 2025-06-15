@@ -5,12 +5,20 @@ description = "Add your description here"
 requires-python = ">=3.12"
 readme = "README.md"
 dependencies = [
+  "boto3>=1.38.36",
   "fastapi>=0.115.12",
+  "google-generativeai>=0.8.5",
   "httpx>=0.28.1",
+  "langchain>=0.3.25",
+  "langchain-aws>=0.2.25",
+  "langchain-community>=0.3.25",
+  "langchain-core>=0.3.65",
+  "langchain-google-genai>=2.0.10",
+  "langchain-openai>=0.3.23",
   "miro-api>=2.2.4",
   "pydantic>=2.11.4",
   "pydantic-settings>=2.9.1",
-  "tinydb>=4.8.2",
+  "requests>=2.32.3",
   "uvicorn>=0.34.2",
 ]
 
@@ -27,15 +35,36 @@ indent-width = 4
 line-length = 88
 
 [tool.ruff.lint]
-select = ["ALL"]
 ignore = [
+  # My hated rules
   "AIR",    # Airflow
   "ERA",    # eradicate
   "D100",   # undocumented-public-module
   "D101",   # undocumented-public-class
   "D104",   # undocumented-public-package
   "COM812",
+  "BLE",
+  "TRY",
+  # The rule has been removed only the documentation is available.
+  "ANN101",
+  "ANN102",
+  "S410",
+  "PT004",
+  "PT005",
+  "E999",
+  "PGH001",
+  "PGH002",
+  "PLR1701",
+  "PLR1706",
+  "UP027",
+  "RUF011",
+  "RUF035",
+  "TRY200",
+  # The rule has been deprecated and will be removed in a future release.
+  "S320",
+  "UP038",
 ]
+select = ["ALL"]
 fixable = ["ALL"]
 unfixable = [
   "F401", # unused-import
@@ -48,16 +77,20 @@ max-complexity = 10 # maximum complexity
 [tool.ruff.lint.pydocstyle]
 convention = "google" # docstring style
 
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = [
+  "F401", # unused-import
+]
+"tests/*" = [
+  "S101",   # Use of `assert` detected
+  "FBT001", # Boolean-typed positional argument in function definition
+]
+
 [tool.ruff.format]
 docstring-code-format = true
 indent-style = "space"
 line-ending = "lf"
 quote-style = "double"
-
-[tool.ruff.lint.per-file-ignores]
-"__init__.py" = [
-  "F401", # unused-import
-]
 
 [tool.pyright]
 typeCheckingMode = "basic"

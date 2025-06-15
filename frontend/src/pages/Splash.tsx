@@ -1,0 +1,79 @@
+import { useNavigate } from "react-router-dom";
+import { fetchAuthStatus } from "@/api/oauth";
+import React from "react";
+import { ProgressIndicator } from "@serendie/ui";
+import { Container, Flex } from "@styled-system/jsx";
+import "@/assets/style.css";
+
+const Miro: React.FC = () => {
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+    const start = Date.now();
+
+    const run = async () => {
+      // 1秒は必ず表示する
+      timeoutId = setTimeout(
+        async () => {
+          // 認証ステータスを確認する.
+          let isAuthenticated: boolean | undefined = false;
+          try {
+            const userId = (await miro.board.getUserInfo()).id;
+            const boardId = (await miro.board.getInfo()).id;
+            isAuthenticated = await fetchAuthStatus(userId, boardId);
+          } catch (e) {
+            isAuthenticated = false;
+          }
+          console.log(`isAuthenticated: ${isAuthenticated}`);
+
+          if (isAuthenticated) {
+            // 認証されていれば、アプリ画面に遷移.
+            navigate("/miro");
+          } else {
+            navigate("/auth/signin");
+          }
+        },
+        Math.max(0, 500 - (Date.now() - start)),
+      );
+    };
+    run();
+    return () => clearTimeout(timeoutId);
+  }, []);
+
+  return (
+    <Container
+      style={{
+        width: "100vw",
+        height: "100vh",
+        margin: 0,
+        padding: 0,
+        // backgroundImage: 'url("/src/assets/portrait.svg")',
+        backgroundImage: 'url("/portrait.svg")',
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      <Flex
+        width="100%"
+        height="100%"
+        direction="column"
+        align="center"
+        justify="center"
+      >
+        <Flex
+          direction="column"
+          align="center"
+          style={{
+            borderRadius: "64px",
+            backdropFilter: "blur(128px)",
+            padding: "32px",
+          }}
+        >
+          <ProgressIndicator size="large" color="white" />
+        </Flex>
+      </Flex>
+    </Container>
+  );
+};
+export default Miro;

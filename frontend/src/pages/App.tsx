@@ -1,9 +1,10 @@
-import * as React from "react";
-import { ProgressIndicator } from "@serendie/ui";
-import { Container, Flex } from "../../styled-system/jsx";
-import "../assets/style.css";
+import React from "react";
+import { ProgressIndicator, Button } from "@serendie/ui";
+import { Container, Flex } from "@styled-system/jsx";
+import { SerendieSymbolLink } from "@serendie/symbols";
+import "@/assets/style.css";
 
-const App: React.FC = () => {
+const App: React.FC = (): React.JSX.Element => {
   const [isPanelOpen, setIsPanelOpen] = React.useState(false);
   // // Open the Top page.
   React.useEffect(() => {
@@ -12,7 +13,7 @@ const App: React.FC = () => {
       if (canOpenPanel) {
         setIsPanelOpen(true);
         miro.board.ui.on("icon:click", async () => {
-          await miro.board.ui.openPanel({ url: "/miro" });
+          await miro.board.ui.openPanel({ url: "/splash" });
         });
       }
     };
@@ -26,7 +27,8 @@ const App: React.FC = () => {
         height: "100vh",
         margin: 0,
         padding: 0,
-        backgroundImage: 'url("/src/assets/landscape.svg")',
+        // backgroundImage: 'url("/src/assets/landscape.svg")',
+        backgroundImage: 'url("/landscape.svg")',
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
@@ -48,7 +50,8 @@ const App: React.FC = () => {
           }}
         >
           <img
-            src="/src/assets/congratulations.png"
+            // src="/src/assets/congratulations.png"
+            src="/congratulations.png"
             alt=""
             style={{
               height: "50vh",
@@ -63,7 +66,18 @@ const App: React.FC = () => {
               <ProgressIndicator size="large" color="white" />
             </>
           ) : (
-            <h3>Miroではないようです...</h3>
+            <>
+              <h3>Miroではないようです...</h3>
+              <Button
+                styleType="filled"
+                size="medium"
+                leftIcon={<SerendieSymbolLink />}
+                onClick={() => window.open("https://miro.com/", "_blank")}
+                style={{ marginTop: "16px" }}
+              >
+                Miroに移動
+              </Button>
+            </>
           )}
         </Flex>
       </Flex>

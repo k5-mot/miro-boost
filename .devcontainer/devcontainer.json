@@ -13,7 +13,7 @@
   ],
   "features": {
     "ghcr.io/rocker-org/devcontainer-features/apt-packages:1": {
-      "packages": "curl,ca-certificates,gnupg,vim,jq,poppler-utils",
+      "packages": "curl,ca-certificates,gnupg2,vim,jq,poppler-utils",
       "upgradePackages": true
     },
     "ghcr.io/devcontainers/features/common-utils:2": {
@@ -22,45 +22,36 @@
       "installOhMyZsh": true
     },
     "ghcr.io/devcontainers/features/git:1": {},
-    // "ghcr.io/devcontainers/features/terraform:1": {
-    //   "version": "latest"
-    // },
     "ghcr.io/rocker-org/devcontainer-features/pandoc:1": {},
     // "ghcr.io/devcontainers/features/aws-cli:1": {},
     // "ghcr.io/devcontainers/features/azure-cli:1": {},
     // "ghcr.io/joshuanianji/devcontainer-features/gcloud-cli-persistence:1": {},
+    // "ghcr.io/devcontainers/features/terraform:1": {
+    //   "version": "latest"
+    // },
     "ghcr.io/devcontainers/features/node:1": {
-      // "version": "lts"
       "version": "22.16.0"
     },
-    // "ghcr.io/devcontainers/features/python:1": {
-    //   "version": "3.13"
-    // },
-    "ghcr.io/jsburckhardt/devcontainer-features/uv:1": {
-      "version": "latest"
-    }
+    "./features/npm": {
+      "version": "latest",
+      "toolsToInstall": "git-cz,npm-check-updates,@anthropic-ai/claude-code,@openai/codex"
+    },
     // "ghcr.io/enricosecondulfo/devcontainer-features/volta:1": {
     //   "version": "latest"
     // },
-    // "ghcr.io/eitsupi/devcontainer-features/jq-likes:2": {}
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.12",
+      "toolsToInstall": "pre-commit"
+    },
+    "ghcr.io/jsburckhardt/devcontainer-features/uv:1": {
+      "version": "latest"
+    }
   },
-  // "mounts": [
-  //   {
-  //     "type": "volume",
-  //     "source": "devcontainer_backend_venv",
-  //     "target": "${containerWorkspaceFolder}/backend/.venv"
-  //   },
-  //   {
-  //     "type": "volume",
-  //     "source": "devcontainer_frontend_node",
-  //     "target": "${containerWorkspaceFolder}/frontend/node_modules"
-  //   },
-  //   {
-  //     "type": "volume",
-  //     "source": "devcontainer_frontend_next",
-  //     "target": "${containerWorkspaceFolder}/frontend/.next"
-  //   }
-  // ],
+  "mounts": [
+    "source=${localEnv:HOME}/.aws,target=/home/vscode/.aws,type=bind,consistency=cached",
+    // "source=miro-boost-venv,target=${containerWorkspaceFolder}/backend/.venv,type=volume",
+    // "source=miro-boost-node,target=${containerWorkspaceFolder}/frontend/node_modules,type=volume"
+  ],
   "containerUser": "vscode",
   "postCreateCommand": "bash ./.devcontainer/postCreate.sh",
   "postStartCommand": "bash ./.devcontainer/postStart.sh",

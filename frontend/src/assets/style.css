@@ -11,11 +11,16 @@
 }
 
 body {
-  font-family: "Roboto", "Noto Sans JP", "Noto Sans Mono", sans-serif;
-  display: flex;
+  font-family:
+    Roboto,
+    "Noto Sans JP",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Noto Sans Mono",
+    sans-serif;
 }
 
-#root {
+/* #root {
   width: 100%;
   overflow: auto;
   padding: var(--space-medium);
@@ -24,169 +29,4 @@ body {
 img {
   max-width: 100%;
   height: auto;
-}
-
-/* ========== モバイル（デフォルト） ========== */
-
-h1,
-.display {
-  font:
-    var(--sd-system-typography-display-medium_compact) "Roboto",
-    "Noto Sans JP",
-    "Noto Sans Mono",
-    sans-serif;
-}
-h2 {
-  font:
-    var(--sd-system-typography-headline-large_compact) "Roboto",
-    "Noto Sans JP",
-    "Noto Sans Mono",
-    sans-serif;
-}
-h3 {
-  font:
-    var(--sd-system-typography-headline-medium_compact) "Roboto",
-    "Noto Sans JP",
-    "Noto Sans Mono",
-    sans-serif;
-}
-h4 {
-  font:
-    var(--sd-system-typography-title-large_compact) "Roboto",
-    "Noto Sans JP",
-    "Noto Sans Mono",
-    sans-serif;
-}
-h5 {
-  font:
-    var(--sd-system-typography-title-medium_compact) "Roboto",
-    "Noto Sans JP",
-    "Noto Sans Mono",
-    sans-serif;
-}
-h6 {
-  font:
-    var(--sd-system-typography-title-small_compact) "Roboto",
-    "Noto Sans JP",
-    "Noto Sans Mono",
-    sans-serif;
-}
-strong,
-.title {
-  font:
-    var(--sd-system-typography-title-medium_compact) "Roboto",
-    "Noto Sans JP",
-    "Noto Sans Mono",
-    sans-serif;
-}
-p,
-span,
-li,
-td {
-  font:
-    var(--sd-system-typography-body-medium_compact) "Roboto",
-    "Noto Sans JP",
-    "Noto Sans Mono",
-    sans-serif;
-}
-label,
-.label,
-button,
-input,
-select {
-  font:
-    var(--sd-system-typography-label-medium_compact) "Roboto",
-    "Noto Sans JP",
-    "Noto Sans Mono",
-    sans-serif;
-}
-small {
-  font:
-    var(--sd-system-typography-label-small_compact) "Roboto",
-    "Noto Sans JP",
-    "Noto Sans Mono",
-    sans-serif;
-}
-
-/* ========== PC（768px以上） ========== */
-@media (min-width: 768px) {
-  h1,
-  .display {
-    font:
-      var(--sd-system-typography-display-medium_expanded) "Roboto",
-      "Noto Sans JP",
-      "Noto Sans Mono",
-      sans-serif;
-  }
-  h2 {
-    font:
-      var(--sd-system-typography-headline-large_expanded) "Roboto",
-      "Noto Sans JP",
-      "Noto Sans Mono",
-      sans-serif;
-  }
-  h3 {
-    font:
-      var(--sd-system-typography-headline-medium_expanded) "Roboto",
-      "Noto Sans JP",
-      "Noto Sans Mono",
-      sans-serif;
-  }
-  h4 {
-    font:
-      var(--sd-system-typography-title-large_expanded) "Roboto",
-      "Noto Sans JP",
-      "Noto Sans Mono",
-      sans-serif;
-  }
-  h5 {
-    font:
-      var(--sd-system-typography-title-medium_expanded) "Roboto",
-      "Noto Sans JP",
-      "Noto Sans Mono",
-      sans-serif;
-  }
-  h6 {
-    font:
-      var(--sd-system-typography-title-small_expanded) "Roboto",
-      "Noto Sans JP",
-      "Noto Sans Mono",
-      sans-serif;
-  }
-  strong,
-  .title {
-    font:
-      var(--sd-system-typography-title-medium_expanded) "Roboto",
-      "Noto Sans JP",
-      "Noto Sans Mono",
-      sans-serif;
-  }
-  p,
-  span,
-  li,
-  td {
-    font:
-      var(--sd-system-typography-body-medium_expanded) "Roboto",
-      "Noto Sans JP",
-      "Noto Sans Mono",
-      sans-serif;
-  }
-  label,
-  .label,
-  button,
-  input,
-  select {
-    font:
-      var(--sd-system-typography-label-medium_expanded) "Roboto",
-      "Noto Sans JP",
-      "Noto Sans Mono",
-      sans-serif;
-  }
-  small {
-    font:
-      var(--sd-system-typography-label-small_expanded) "Roboto",
-      "Noto Sans JP",
-      "Noto Sans Mono",
-      sans-serif;
-  }
-}
+} */

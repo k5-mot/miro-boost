@@ -17,7 +17,7 @@ const allHtmlEntries = fs
 
       return acc;
     },
-    {} as Record<string, string>
+    {} as Record<string, string>,
   );
 
 // https://vitejs.dev/config/
@@ -28,6 +28,12 @@ export default defineConfig({
     },
   },
   plugins: [react()],
+  resolve: {
+    alias: {
+      "@styled-system": path.resolve(__dirname, "styled-system"),
+      "@": path.resolve(__dirname, "src"),
+    },
+  },
   server: {
     port: 3000,
     watch: {
