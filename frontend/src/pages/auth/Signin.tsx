@@ -1,13 +1,13 @@
-import React from "react";
-import { Button, List, ListItem } from "@serendie/ui";
-import { useNavigate } from "react-router-dom";
-import { fetchAuthUrl, fetchAuthStatus } from "@/api/oauth";
-import { Container, Flex } from "@styled-system/jsx";
 import {
   SerendieSymbolUser,
   SerendieSymbolClipboard,
   SerendieSymbolCheckCircle,
 } from "@serendie/symbols";
+import { Button, List, ListItem } from "@serendie/ui";
+import { Container, Flex } from "@styled-system/jsx";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { fetchAuthUrl, fetchAuthStatus } from "@/api/oauth";
 import "@/assets/style.css";
 import { Headline, Body } from "@/styles";
 
@@ -32,8 +32,8 @@ const Signin: React.FC = () => {
         setIsAuthenticated(false);
       }
     };
-    setMiroInfo();
-    checkAuthStatus();
+    void setMiroInfo();
+    void checkAuthStatus();
   }, []);
 
   const openAuthModal = async () => {
@@ -115,7 +115,9 @@ const Signin: React.FC = () => {
             styleType="filled"
             color="primary"
             style={{ margin: 8 }}
-            onClick={() => openAuthModal()}
+            onClick={() => {
+              void openAuthModal();
+            }}
           >
             Miro 認証
           </Button>
@@ -134,15 +136,15 @@ const Signin: React.FC = () => {
           <List>
             <ListItem
               title={`UserID: ${userId}`}
-              leftIcon={<SerendieSymbolUser name={"placeholder"} />}
+              leftIcon={<SerendieSymbolUser name="placeholder" />}
             />
             <ListItem
               title={`BoardID: ${boardId}`}
-              leftIcon={<SerendieSymbolClipboard name={"placeholder"} />}
+              leftIcon={<SerendieSymbolClipboard name="placeholder" />}
             />
             <ListItem
               title={`Status: ${isAuthenticated}`}
-              leftIcon={<SerendieSymbolCheckCircle name={"placeholder"} />}
+              leftIcon={<SerendieSymbolCheckCircle name="placeholder" />}
             />
           </List>
         </Flex>

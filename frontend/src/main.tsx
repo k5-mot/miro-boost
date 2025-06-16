@@ -2,18 +2,18 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import App from "@/pages/App";
-import Miro from "@/pages/Miro";
-import Signin from "@/pages/auth/Signin";
-import Signed from "@/pages/auth/Signed";
 import Check from "@/pages/auth/Check";
-import Splash from "@/pages/Splash";
+import Signed from "@/pages/auth/Signed";
+import Signin from "@/pages/auth/Signin";
 import Config from "@/pages/config/Config";
+import Miro from "@/pages/Miro";
 import MiroTypography from "@/pages/miro/0-Typography";
 import MiroGroup from "@/pages/miro/1-Group";
 import MiroGroupCheck from "@/pages/miro/1-GroupCheck";
 import MiroTask from "@/pages/miro/2-Task";
 import MiroTaskCheck from "@/pages/miro/2-TaskCheck";
 import Demo from "@/pages/miro/3-Demo";
+import Splash from "@/pages/Splash";
 
 const rootElement = document.getElementById("root");
 if (rootElement) {

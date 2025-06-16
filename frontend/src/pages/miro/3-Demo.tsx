@@ -1,15 +1,14 @@
-import React from "react";
-import { Container, Center } from "@styled-system/jsx";
-import { Headline, Body, Title } from "@/styles";
-import "@/assets/style.css";
-import { useNavigate } from "react-router-dom";
-
 import {
   SerendieSymbolChevronLeft,
   SerendieSymbolPen,
 } from "@serendie/symbols";
 import { Divider, IconButton, TextArea, TextField } from "@serendie/ui";
+import { Container, Center } from "@styled-system/jsx";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import FileDialog from "@/components/FileDialog";
+import { Headline, Body, Title } from "@/styles";
+import "@/assets/style.css";
 
 const Demo: React.FC = () => {
   React.useEffect(() => {}, []);
@@ -48,7 +47,9 @@ const Demo: React.FC = () => {
           shape="circle"
           styleType="outlined"
           size="small"
-          onClick={() => navigate("/miro")}
+          onClick={() => {
+            void navigate("/miro");
+          }}
           aria-label="戻る"
           style={{ position: "absolute", left: 10 }}
         />
@@ -87,7 +88,7 @@ const Demo: React.FC = () => {
         {/* 複数ファイル選択 */}
         <FileDialog
           onMultipleFileSelect={handleMultipleFileSelect}
-          multiple={true}
+          multiple
           accept=".pdf,.doc,.docx,.txt"
           styleType="outlined"
         >

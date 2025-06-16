@@ -1,17 +1,16 @@
-import React from "react";
-import { Container, Center } from "@styled-system/jsx";
-import { Button, Divider, IconButton } from "@serendie/ui";
+import { StickyNote } from "@mirohq/websdk-types";
 import {
   SerendieSymbolChevronLeft,
   SerendieSymbolLightning,
   SerendieSymbolLightningFilled,
   SerendieSymbolPenFilled,
 } from "@serendie/symbols";
-import { Body, Headline } from "@/styles";
+import { Button, Divider, IconButton } from "@serendie/ui";
+import { Container, Center } from "@styled-system/jsx";
+import React from "react";
 import { useNavigate } from "react-router-dom";
+import { Body, Headline } from "@/styles";
 import "@/assets/style.css";
-// import FetchStickyNotes from "@/components/FetchStickyNotes";
-import { StickyNote } from "@mirohq/websdk-types";
 
 const baseUrl = String(import.meta.env.VITE_PUBLIC_BACKEND_URL);
 
@@ -44,7 +43,7 @@ async function groupStickyNotes(params: {
       throw new Error(`Cannot fetch group sticky notes: ${responseAPI.status}`);
     }
 
-    const result = await responseAPI.json();
+    const result: unknown = await responseAPI.json();
     return result;
   } catch (error) {
     console.error("Error:", error);
@@ -72,7 +71,7 @@ async function generateSampleData(params: { userId: string; boardId: string }) {
       throw new Error(`Cannot fetch group sticky notes: ${response.status}`);
     }
 
-    const result = await response.json();
+    const result: unknown = await response.json();
     return result;
   } catch (error) {
     console.error("Error:", error);
@@ -110,7 +109,9 @@ const MiroGroup: React.FC = () => {
             shape="circle"
             styleType="outlined"
             size="small"
-            onClick={() => navigate("/miro")}
+            onClick={() => {
+              void navigate("/miro");
+            }}
             aria-label="戻る"
             style={{ position: "absolute", left: 10 }}
           />
@@ -126,30 +127,32 @@ const MiroGroup: React.FC = () => {
             leftIcon={<SerendieSymbolPenFilled />}
             isLoading={isLoading}
             disabled={isLoading}
-            onClick={async () => {
-              try {
-                // ボード・ユーザー情報を取得.
-                const boardInfo = await miro.board.getInfo();
-                const userInfo = await miro.board.getUserInfo();
-                if (!boardInfo || !userInfo) {
-                  throw new Error("Cannot fetch board or user info.");
+            onClick={() => {
+              void (async () => {
+                try {
+                  // ボード・ユーザー情報を取得.
+                  const boardInfo = await miro.board.getInfo();
+                  const userInfo = await miro.board.getUserInfo();
+                  if (!boardInfo || !userInfo) {
+                    throw new Error("Cannot fetch board or user info.");
+                  }
+
+                  // ローディング開始
+                  setIsLoading(true);
+
+                  // モックデータを生成.
+                  await generateSampleData({
+                    userId: userInfo.id,
+                    boardId: boardInfo.id,
+                  });
+                } catch (error) {
+                  console.error("Cannot create mock sticky notes.: ", error);
+                  return;
+                } finally {
+                  // ローディング終了
+                  setIsLoading(false);
                 }
-
-                // ローディング開始
-                setIsLoading(true);
-
-                // モックデータを生成.
-                await generateSampleData({
-                  userId: userInfo.id,
-                  boardId: boardInfo.id,
-                });
-              } catch (error) {
-                console.error("Cannot create mock sticky notes.: ", error);
-                return;
-              } finally {
-                // ローディング終了
-                setIsLoading(false);
-              }
+              })();
             }}
           >
             モックデータを生成
@@ -164,53 +167,55 @@ const MiroGroup: React.FC = () => {
             isLoading={isLoading}
             disabled={isLoading}
             leftIcon={<SerendieSymbolLightningFilled />}
-            onClick={async () => {
-              try {
-                // ボード・ユーザー情報を取得.
-                const boardInfo = await miro.board.getInfo();
-                const userInfo = await miro.board.getUserInfo();
-                if (!boardInfo || !userInfo) {
-                  throw new Error("Cannot fetch board or user info.");
-                }
+            onClick={() => {
+              void (async () => {
+                try {
+                  // ボード・ユーザー情報を取得.
+                  const boardInfo = await miro.board.getInfo();
+                  const userInfo = await miro.board.getUserInfo();
+                  if (!boardInfo || !userInfo) {
+                    throw new Error("Cannot fetch board or user info.");
+                  }
 
-                // ローディング開始
-                setIsLoading(true);
+                  // ローディング開始
+                  setIsLoading(true);
 
-                // 選択した付箋を取得.
-                const selectedNotes = await miro.board.getSelection();
-                const selectedStickyNotes = selectedNotes.filter(
-                  (item) => item.type === "sticky_note",
-                ) as StickyNote[];
+                  // 選択した付箋を取得.
+                  const selectedNotes = await miro.board.getSelection();
+                  const selectedStickyNotes = selectedNotes.filter(
+                    (item) => item.type === "sticky_note",
+                  ) as StickyNote[];
 
-                // 選択した付箋一覧を表示.
-                const { waitForClose } = await miro.board.ui.openModal<
-                  StickyNote[]
-                >({
-                  url: "/miro/group-check",
-                  // width: 1000,
-                  // height: 600,
-                  fullscreen: true,
-                  data: selectedStickyNotes,
-                });
-
-                // モーダルが閉じられたときの処理.
-                const result = await waitForClose();
-                if (result === "cancel") {
-                  return;
-                } else if (result === "ok") {
-                  await groupStickyNotes({
-                    userId: userInfo.id,
-                    boardId: boardInfo.id,
-                    groupCriteria: "semantic",
-                    stickyNotes: selectedStickyNotes,
+                  // 選択した付箋一覧を表示.
+                  const { waitForClose } = await miro.board.ui.openModal<
+                    StickyNote[]
+                  >({
+                    url: "/miro/group-check",
+                    // width: 1000,
+                    // height: 600,
+                    fullscreen: true,
+                    data: selectedStickyNotes,
                   });
+
+                  // モーダルが閉じられたときの処理.
+                  const result = await waitForClose();
+                  if (result === "cancel") {
+                    return;
+                  } else if (result === "ok") {
+                    await groupStickyNotes({
+                      userId: userInfo.id,
+                      boardId: boardInfo.id,
+                      groupCriteria: "semantic",
+                      stickyNotes: selectedStickyNotes,
+                    });
+                  }
+                } catch (error) {
+                  console.error("Cannot group sticky notes: ", error);
+                } finally {
+                  // ローディング終了
+                  setIsLoading(false);
                 }
-              } catch (error) {
-                console.error("Cannot group sticky notes: ", error);
-              } finally {
-                // ローディング終了
-                setIsLoading(false);
-              }
+              })();
             }}
           >
             セマンティックグルーピング

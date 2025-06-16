@@ -14,12 +14,12 @@ export const fetchAuthStatus = async (
     const response = await fetch(
       `${baseUrl}/api/oauth/status?user_id=${encodeURIComponent(userId)}&board_id=${encodeURIComponent(boardId)}`,
     );
-    const responseBody: {
+    const responseBody = (await response.json()) as {
       user_id?: string;
       status?: boolean;
       session_id?: string;
       csrf_token?: string;
-    } = await response.json();
+    };
     console.info("Fetch auth status response:", responseBody);
     return responseBody.status;
   } catch (e) {
@@ -42,9 +42,7 @@ export const fetchAuthUrl = async (
     const response = await fetch(
       `${baseUrl}/api/oauth/authorize?user_id=${encodeURIComponent(userId)}&board_id=${encodeURIComponent(boardId)}`,
     );
-    const responseBody: {
-      auth_url?: string;
-    } = await response.json();
+    const responseBody = (await response.json()) as { auth_url?: string };
     return responseBody.auth_url;
   } catch (e) {
     console.error("status fetch error", e);

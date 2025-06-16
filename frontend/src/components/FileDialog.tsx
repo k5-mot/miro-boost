@@ -1,16 +1,16 @@
-import React, { useRef, useState } from "react";
+import { SerendieSymbolFile } from "@serendie/symbols";
+import { Button, ModalDialog, ListItem, List } from "@serendie/ui";
 import { css } from "@styled-system/css";
 import { VStack, HStack } from "@styled-system/jsx";
-import { Button, ModalDialog, ListItem, List } from "@serendie/ui";
+import React, { useRef, useState } from "react";
 import { Label } from "@/styles";
-import { SerendieSymbolFile } from "@serendie/symbols";
 
 /**
  * FileDialogコンポーネントのプロパティ
  *
  * @interface FileDialogProps
  */
-interface FileDialogProps {
+type FileDialogProps = {
   /** ファイル選択時のコールバック関数 */
   onFileSelect?: (file: File) => void;
   /** 複数ファイル選択時のコールバック関数 */

@@ -1,5 +1,7 @@
-import React, { useState } from "react";
-import { Container, Center } from "@styled-system/jsx";
+import {
+  SerendieSymbolChevronLeft,
+  SerendieSymbolGear,
+} from "@serendie/symbols";
 import {
   Button,
   Divider,
@@ -8,10 +10,8 @@ import {
   Tabs,
   TextField,
 } from "@serendie/ui";
-import {
-  SerendieSymbolChevronLeft,
-  SerendieSymbolGear,
-} from "@serendie/symbols";
+import { Container, Center } from "@styled-system/jsx";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Title, Headline, Body } from "@/styles";
 import "@/assets/style.css";
@@ -44,7 +44,9 @@ const Config: React.FC = (): React.JSX.Element => {
             shape="circle"
             styleType="outlined"
             size="small"
-            onClick={() => navigate("/miro")}
+            onClick={() => {
+              void navigate("/miro");
+            }}
             aria-label="戻る"
             style={{ position: "absolute", left: 10 }}
           />

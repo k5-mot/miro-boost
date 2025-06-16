@@ -1,9 +1,9 @@
-import { Center, Box } from "@styled-system/jsx";
-import { Button, ModalDialog } from "@serendie/ui";
+import { StickyNote } from "@mirohq/websdk-types";
 import { SerendieSymbolStickyNoteFilled } from "@serendie/symbols";
+import { Button, ModalDialog } from "@serendie/ui";
+import { Center, Box } from "@styled-system/jsx";
 import React, { useState } from "react";
 import { Body } from "@/styles";
-import { StickyNote } from "@mirohq/websdk-types";
 
 const fetchStickyNotes = async (): Promise<StickyNote[]> => {
   try {
@@ -35,10 +35,11 @@ const FetchStickyNotes: React.FC<FetchStickyNotesProps> = (props) => {
       <Center flexDirection="row" width="100%" gap={16}>
         <Button
           leftIcon={<SerendieSymbolStickyNoteFilled />}
-          onClick={async () => {
-            const notes = await fetchStickyNotes();
-            setSelectedStickeyNotes(notes);
-            setIsOpenModal(true);
+          onClick={() => {
+            void fetchStickyNotes().then((notes) => {
+              setSelectedStickeyNotes(notes);
+              setIsOpenModal(true);
+            });
           }}
         >
           付箋を取り込み
@@ -53,7 +54,7 @@ const FetchStickyNotes: React.FC<FetchStickyNotesProps> = (props) => {
         title="選択した付箋の内容"
         isOpen={isOpenModal}
         onOpenChange={(e) => setIsOpenModal(e.open)}
-        onButtonClick={async () => {
+        onButtonClick={() => {
           props.setStickyNotes?.(selectedStickeyNotes);
           setIsOpenModal(false);
         }}

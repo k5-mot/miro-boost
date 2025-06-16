@@ -1,7 +1,6 @@
-import React from "react";
-import { useEffect } from "react";
-import { Container, Flex } from "@styled-system/jsx";
 import { ProgressIndicator } from "@serendie/ui";
+import { Container, Flex } from "@styled-system/jsx";
+import React, { useEffect } from "react";
 import "@/assets/style.css";
 import { Headline } from "@/styles";
 
@@ -10,18 +9,18 @@ const Signed: React.FC = () => {
     let timeoutId: NodeJS.Timeout;
     const start = Date.now();
 
-    const fetchAuthUrl = async () => {
+    const fetchAuthUrl = () => {
       // 認証後、3秒待機した後、モーダルを閉じる
       timeoutId = setTimeout(
         () => {
-          (async () => {
+          void (async () => {
             await miro.board.ui.closeModal();
           })();
         },
         Math.max(0, 2000 - (Date.now() - start)),
       );
     };
-    fetchAuthUrl();
+    void fetchAuthUrl();
     return () => clearTimeout(timeoutId);
   }, []);
 

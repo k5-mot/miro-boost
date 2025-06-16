@@ -1,14 +1,13 @@
-import React from "react";
-import { Container, Center } from "@styled-system/jsx";
-import { Headline, Body, Label, Display, Title } from "@/styles";
-import "@/assets/style.css";
-import { useNavigate } from "react-router-dom";
-
 import {
   SerendieSymbolChevronLeft,
   SerendieSymbolPen,
 } from "@serendie/symbols";
 import { Divider, IconButton } from "@serendie/ui";
+import { Container, Center } from "@styled-system/jsx";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { Headline, Body, Label, Display, Title } from "@/styles";
+import "@/assets/style.css";
 
 const MiroTypography: React.FC = () => {
   React.useEffect(() => {}, []);
@@ -37,7 +36,9 @@ const MiroTypography: React.FC = () => {
           shape="circle"
           styleType="outlined"
           size="small"
-          onClick={() => navigate("/miro")}
+          onClick={() => {
+            void navigate("/miro");
+          }}
           aria-label="戻る"
           style={{ position: "absolute", left: 10 }}
         />

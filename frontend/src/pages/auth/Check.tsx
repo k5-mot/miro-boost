@@ -1,8 +1,3 @@
-import React from "react";
-import { Button, List, ListItem, Divider } from "@serendie/ui";
-import { useNavigate } from "react-router-dom";
-import { fetchAuthStatus, fetchLogout } from "@/api/oauth";
-import { Container, Flex, Wrap } from "@styled-system/jsx";
 import {
   SerendieSymbolUser,
   SerendieSymbolClipboard,
@@ -12,6 +7,11 @@ import {
   SerendieSymbolDownload,
   SerendieSymbolPhone,
 } from "@serendie/symbols";
+import { Button, List, ListItem, Divider } from "@serendie/ui";
+import { Container, Flex, Wrap } from "@styled-system/jsx";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { fetchAuthStatus, fetchLogout } from "@/api/oauth";
 import "@/assets/style.css";
 import { Body, Headline } from "@/styles";
 
@@ -36,12 +36,12 @@ const Check: React.FC = () => {
         setIsAuthenticated(false);
       }
     };
-    setMiroInfo();
-    checkAuthStatus();
+    void setMiroInfo();
+    void checkAuthStatus();
   }, []);
 
-  const handleBack = async () => {
-    navigate("/miro");
+  const handleBack = () => {
+    void navigate("/miro");
   };
 
   return (
@@ -88,15 +88,18 @@ const Check: React.FC = () => {
             <Button
               styleType="filled"
               size="small"
-              onClick={async () => {
-                await fetchLogout()
-                  .then(async () => {
-                    console.info("Logged out successfully.");
-                    await miro.board.ui.closePanel();
-                  })
-                  .catch((error) => {
-                    console.error("Logout failed:", error);
-                  });
+              onClick={() => {
+                const handleLogout = async () => {
+                  await fetchLogout()
+                    .then(async () => {
+                      console.info("Logged out successfully.");
+                      await miro.board.ui.closePanel();
+                    })
+                    .catch((error) => {
+                      console.error("Logout failed:", error);
+                    });
+                };
+                void handleLogout();
               }}
               rightIcon={<SerendieSymbolRefresh />}
             >
@@ -152,15 +155,15 @@ const Check: React.FC = () => {
           <List>
             <ListItem
               title={`UserID: ${userId}`}
-              leftIcon={<SerendieSymbolUser name={"placeholder"} />}
+              leftIcon={<SerendieSymbolUser name="placeholder" />}
             />
             <ListItem
               title={`BoardID: ${boardId}`}
-              leftIcon={<SerendieSymbolClipboard name={"placeholder"} />}
+              leftIcon={<SerendieSymbolClipboard name="placeholder" />}
             />
             <ListItem
               title={`Status: ${isAuthenticated}`}
-              leftIcon={<SerendieSymbolCheckCircle name={"placeholder"} />}
+              leftIcon={<SerendieSymbolCheckCircle name="placeholder" />}
             />
           </List>
         </Flex>

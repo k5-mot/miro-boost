@@ -7,12 +7,14 @@ import eslintPluginReactRefresh from "eslint-plugin-react-refresh";
 import eslintPluginUnusedImport from "eslint-plugin-unused-imports";
 import eslintPluginTypescript from "typescript-eslint";
 import eslintPluginPandaCSS from "@pandacss/eslint-plugin";
+// import react from "eslint-plugin-import/config/react";
+
 const eslintConfig = [
   {
     // ====================
     // Global settings
     // ====================
-    files: ["*.js", "*.jsx", "*.ts", "*.tsx"],
+    files: ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"],
     ignores: [
       "**/*.cjs",
       "**/*.mjs",
@@ -34,10 +36,12 @@ const eslintConfig = [
     // ====================
     // for React.js
     // ====================
+    files: ["**/*.jsx", "**/*.tsx"],
     ...eslint.configs.recommended, // ESLint recommended
     ...eslintPluginReact.configs.flat.recommended,
     ...eslintPluginReact.configs.flat["jsx-runtime"],
     plugins: {
+      react: eslintPluginReact,
       "react-hooks": eslintPluginReactHooks,
       "@pandacss": eslintPluginPandaCSS,
       "react-refresh": eslintPluginReactRefresh,
@@ -50,20 +54,31 @@ const eslintConfig = [
         "warn",
         { allowConstantExport: true },
       ],
-      ...rules, // カスタムルールで上書き
+      // ...rules, // カスタムルールで上書き
     },
   },
+
+  ...eslintPluginTypescript.configs.recommended, // Type check
+  ...eslintPluginTypescript.configs.recommendedTypeChecked, // Type check
+  // ...eslintPluginTypescript.configs.strictTypeChecked, // Type check
+  // ...eslintPluginTypescript.configs.stylisticTypeChecked, // Style check
   {
     // ====================
     // for TypeScript
     // ====================
-    files: ["*.ts", "*.tsx"],
+    files: ["**/*.ts", "**/*.tsx"],
     // ...tseslint.configs.recommended, // Typescript recommended
-    ...eslintPluginTypescript.configs.strictTypeChecked, // Type check
-    ...eslintPluginTypescript.configs.stylisticTypeChecked, // Style check
+    // ...eslintPluginTypescript.configs.strictTypeChecked, // Type check
+    // ...eslintPluginTypescript.configs.stylisticTypeChecked, // Style check
     languageOptions: {
       parser: eslintPluginTypescript.parser,
       parserOptions: { project: "./tsconfig.json" },
+    },
+    plugins: {
+      react: eslintPluginReact,
+      "react-hooks": eslintPluginReactHooks,
+      "@pandacss": eslintPluginPandaCSS,
+      "react-refresh": eslintPluginReactRefresh,
     },
     rules: {
       "@typescript-eslint/no-unused-vars": [
@@ -88,6 +103,7 @@ const eslintConfig = [
     // ====================
     // for Import order & Unused import
     // ====================
+    files: ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"],
     plugins: {
       import: eslintPluginImport,
       "unused-imports": eslintPluginUnusedImport,

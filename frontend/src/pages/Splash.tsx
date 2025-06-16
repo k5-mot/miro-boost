@@ -1,8 +1,8 @@
-import { useNavigate } from "react-router-dom";
-import { fetchAuthStatus } from "@/api/oauth";
-import React from "react";
 import { ProgressIndicator } from "@serendie/ui";
 import { Container, Flex } from "@styled-system/jsx";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { fetchAuthStatus } from "@/api/oauth";
 import "@/assets/style.css";
 
 const Miro: React.FC = () => {
@@ -12,34 +12,36 @@ const Miro: React.FC = () => {
     let timeoutId: NodeJS.Timeout;
     const start = Date.now();
 
-    const run = async () => {
+    const run = () => {
       // 1秒は必ず表示する
       timeoutId = setTimeout(
-        async () => {
+        () => {
           // 認証ステータスを確認する.
-          let isAuthenticated: boolean | undefined = false;
-          try {
-            const userId = (await miro.board.getUserInfo()).id;
-            const boardId = (await miro.board.getInfo()).id;
-            isAuthenticated = await fetchAuthStatus(userId, boardId);
-          } catch (e) {
-            isAuthenticated = false;
-          }
-          console.log(`isAuthenticated: ${isAuthenticated}`);
+          void (async () => {
+            let isAuthenticated: boolean | undefined = false;
+            try {
+              const userId = (await miro.board.getUserInfo()).id;
+              const boardId = (await miro.board.getInfo()).id;
+              isAuthenticated = await fetchAuthStatus(userId, boardId);
+            } catch (_e) {
+              isAuthenticated = false;
+            }
+            console.log(`isAuthenticated: ${isAuthenticated}`);
 
-          if (isAuthenticated) {
-            // 認証されていれば、アプリ画面に遷移.
-            navigate("/miro");
-          } else {
-            navigate("/auth/signin");
-          }
+            if (isAuthenticated) {
+              // 認証されていれば、アプリ画面に遷移.
+              void navigate("/miro");
+            } else {
+              void navigate("/auth/signin");
+            }
+          })();
         },
         Math.max(0, 500 - (Date.now() - start)),
       );
     };
-    run();
+    void run();
     return () => clearTimeout(timeoutId);
-  }, []);
+  }, [navigate]);
 
   return (
     <Container

@@ -1,6 +1,4 @@
-import React from "react";
-import { Container, Center, Wrap, Flex } from "@styled-system/jsx";
-import { Button, Divider, List, ListItem } from "@serendie/ui";
+import { StickyNote } from "@mirohq/websdk-types";
 import {
   SerendieSymbolAlertTriangle,
   SerendieSymbolListBullet,
@@ -8,8 +6,10 @@ import {
   SerendieSymbolChevronLeft,
   SerendieSymbolStickyNote,
 } from "@serendie/symbols";
+import { Button, Divider, List, ListItem } from "@serendie/ui";
+import { Container, Center, Wrap, Flex } from "@styled-system/jsx";
+import React from "react";
 import { Headline } from "@/styles";
-import { StickyNote } from "@mirohq/websdk-types";
 import "@/assets/style.css";
 
 const MiroGroupCheck: React.FC = () => {
@@ -25,7 +25,7 @@ const MiroGroupCheck: React.FC = () => {
         console.error("Cannot fetch modal datas.: ", error);
       }
     };
-    fetchBoardModalData();
+    void fetchBoardModalData();
   }, []);
 
   return (
@@ -63,8 +63,8 @@ const MiroGroupCheck: React.FC = () => {
             <Button
               leftIcon={<SerendieSymbolChevronLeft />}
               styleType="outlined"
-              onClick={async () => {
-                await miro.board.ui.closeModal<string>("cancel");
+              onClick={() => {
+                void miro.board.ui.closeModal<string>("cancel");
               }}
             >
               閉じる
@@ -72,8 +72,8 @@ const MiroGroupCheck: React.FC = () => {
             <Button
               leftIcon={<SerendieSymbolLightning />}
               styleType="filled"
-              onClick={async () => {
-                await miro.board.ui.closeModal<string>("ok");
+              onClick={() => {
+                void miro.board.ui.closeModal<string>("ok");
               }}
             >
               実行

@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { Container, Center, Wrap } from "@styled-system/jsx";
-import { Button, Divider, IconButton, ModalDialog } from "@serendie/ui";
 import {
   SerendieSymbolPlaceholder,
   SerendieSymbolFlag,
   SerendieSymbolGear,
   SerendieSymbolQuestion,
 } from "@serendie/symbols";
+import { Button, Divider, IconButton, ModalDialog } from "@serendie/ui";
+import { Container, Center, Wrap } from "@styled-system/jsx";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Title, Headline } from "@/styles";
 import "@/assets/style.css";
@@ -41,7 +41,9 @@ const Miro: React.FC = () => {
             shape="circle"
             styleType="outlined"
             size="small"
-            onClick={() => navigate("/config/config")}
+            onClick={() => {
+              void navigate("/config/config");
+            }}
             aria-label="戻る"
             style={{ position: "absolute", left: 10 }}
           />
@@ -65,16 +67,34 @@ const Miro: React.FC = () => {
 
         <Center flexDirection="column" width="100%" gap={8} paddingY={8}>
           <Title>生成AI機能</Title>
-          <Button onClick={() => navigate("/miro/group")}>
+          <Button
+            onClick={() => {
+              void navigate("/miro/group");
+            }}
+          >
             🤖セマンティックグルーピング
           </Button>
-          <Button onClick={() => navigate("/miro/task")}>
+          <Button
+            onClick={() => {
+              void navigate("/miro/task");
+            }}
+          >
             📝タスク切り出し
           </Button>
-          <Button onClick={() => navigate("/miro/typography")}>
+          <Button
+            onClick={() => {
+              void navigate("/miro/typography");
+            }}
+          >
             ✏️タイポグラフィ
           </Button>
-          <Button onClick={() => navigate("/miro/demo")}>✏️デモ</Button>
+          <Button
+            onClick={() => {
+              void navigate("/miro/demo");
+            }}
+          >
+            ✏️デモ
+          </Button>
         </Center>
 
         <Divider />
@@ -86,7 +106,9 @@ const Miro: React.FC = () => {
               leftIcon={<SerendieSymbolFlag />}
               size="small"
               styleType="outlined"
-              onClick={() => navigate("/auth/check")}
+              onClick={() => {
+                void navigate("/auth/check");
+              }}
             >
               トラブルシューティング
             </Button>

@@ -1,7 +1,7 @@
-import React from "react";
+import { SerendieSymbolLink } from "@serendie/symbols";
 import { ProgressIndicator, Button } from "@serendie/ui";
 import { Container, Flex } from "@styled-system/jsx";
-import { SerendieSymbolLink } from "@serendie/symbols";
+import React from "react";
 import "@/assets/style.css";
 
 const App: React.FC = (): React.JSX.Element => {
@@ -12,12 +12,12 @@ const App: React.FC = (): React.JSX.Element => {
       const canOpenPanel = await miro.board.ui.canOpenPanel();
       if (canOpenPanel) {
         setIsPanelOpen(true);
-        miro.board.ui.on("icon:click", async () => {
-          await miro.board.ui.openPanel({ url: "/splash" });
+        void miro.board.ui.on("icon:click", () => {
+          void miro.board.ui.openPanel({ url: "/splash" });
         });
       }
     };
-    setup();
+    void setup();
   }, []);
 
   return (
