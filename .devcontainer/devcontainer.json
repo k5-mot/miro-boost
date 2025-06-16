@@ -36,6 +36,7 @@
       "version": "latest",
       "toolsToInstall": "git-cz,npm-check-updates,@anthropic-ai/claude-code,@openai/codex"
     },
+    // "ghcr.io/anthropics/devcontainer-features/claude-code:1.0": {},
     // "ghcr.io/enricosecondulfo/devcontainer-features/volta:1": {
     //   "version": "latest"
     // },
