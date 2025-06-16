@@ -13,6 +13,7 @@ import MiroGroup from "@/pages/miro/1-Group";
 import MiroGroupCheck from "@/pages/miro/1-GroupCheck";
 import MiroTask from "@/pages/miro/2-Task";
 import MiroTaskCheck from "@/pages/miro/2-TaskCheck";
+import Demo from "@/pages/miro/3-Demo";
 
 const rootElement = document.getElementById("root");
 if (rootElement) {
@@ -32,6 +33,7 @@ if (rootElement) {
           <Route path="/miro/group-check" element={<MiroGroupCheck />} />
           <Route path="/miro/task" element={<MiroTask />} />
           <Route path="/miro/task-check" element={<MiroTaskCheck />} />
+          <Route path="/miro/demo" element={<Demo />} />
         </Routes>
       </BrowserRouter>
     </React.StrictMode>,

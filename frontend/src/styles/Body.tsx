@@ -13,6 +13,7 @@ type BodyProps = {
   className?: string;
   as?: "p" | "span" | "strong" | "em";
   style?: React.CSSProperties;
+  onClick?: (event: React.MouseEvent<HTMLElement>) => void;
 };
 
 /**
@@ -44,7 +45,11 @@ const Body = (props: BodyProps): React.JSX.Element => {
   };
 
   return (
-    <Tag className={`body ${props.className || ""}`} style={mergedStyle}>
+    <Tag
+      className={`body ${props.className || ""}`}
+      style={mergedStyle}
+      onClick={props.onClick}
+    >
       {props.children}
     </Tag>
   );

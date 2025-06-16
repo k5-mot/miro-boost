@@ -1,22 +1,12 @@
 ---
-applyTo: "frontend/**/*"
+applyTo: "frontend/src/**/*"
 ---
 
-# PandaCSS & Serendie Design System ガイドライン
-
-## 概要
-
-このプロジェクトでは **PandaCSS v0.54.0** と **Serendie Design System** を使用してスタイリングと UI コンポーネントを管理しています。
-
-### PandaCSS
-
-ゼロランタイム CSS-in-JS ライブラリ。型安全性とパフォーマンスを両立し、ビルド時に CSS を生成します。レイアウトプリミティブ（パターン）を提供し、堅牢でレスポンシブなレイアウトを簡単に作成できます。
-
-### Serendie Design System
-
-三菱電機発のデザインシステム。デザイントークンベースの設計で、5 つのカラーテーマ（konjo, asagi, sumire, tsutsuji, kurikawa）をサポートします。コードと Figma の間で Single Source of Truth を実現しています。
+# PandaCSS パターン & Serendie UI コンポーネント ガイドライン
 
 ## PandaCSS パターン一覧
+
+PandaCSS v0.54.0 のレイアウトプリミティブ（パターン）を使用して、堅牢でレスポンシブなレイアウトを簡単に作成できます。
 
 ### 基本レイアウトパターン
 
@@ -304,6 +294,8 @@ import { CQ } from "../styled-system/jsx";
 
 ## Serendie Design System コンポーネント一覧
 
+Serendie Design System は三菱電機発のデザインシステムで、デザイントークンベースの設計により、5 つのカラーテーマをサポートします。
+
 ### ナビゲーション・レイアウト
 
 - **BottomNavigation** & **BottomNavigationItem**: モバイル向けボトムナビゲーション
@@ -350,134 +342,6 @@ import { CQ } from "../styled-system/jsx";
 - **ModalDialog**: モーダルダイアログ
 - **DropdownMenu**: ドロップダウンメニュー
 
-## Serendie アイコンシステム
-
-### Serendie Symbols
-
-現在 Outlined（線）と Filled（塗り）の 2 パターンで、それぞれ約 300 種類のアイコンを提供。
-
-#### 設計原則
-
-1. **Arc を生かす**: Serendie ブランドのシンボルである半円（Arc）を表現に活用
-2. **極端なシルエット**: 線と角のコントラストを意識したメリハリのある形状
-3. **ユーザーを驚かせない**: 個性よりも一般性を重視した分かりやすいアイコン
-
-#### 技術仕様
-
-- **線幅**: 1.2px
-- **角丸半径**: 0.25px
-- **グリッド**: 24dp × 24dp
-- **ライブエリア**: 20dp × 20dp（パディング 2dp）
-- **パスの間隔**: 1.6px
-
-#### React 環境での使用
-
-```tsx
-import { IconName } from "@serendie/symbols";
-
-<IconName />;
-```
-
-## Serendie デザイントークン
-
-### デザイントークンとは
-
-Key/Value（名前と値）のペアからなるデザインシステムの最小単位。カラー、タイポグラフィ、寸法、階層などを定義し、デザインと開発の共通言語となります。
-
-### 2 層構造
-
-- **リファレンストークン**: `color.scale.green.500`（生の値）
-- **システムトークン**: `color.impression.positiveContainer`（意味のある名前）
-
-### カラーテーマ（5 種類）
-
-```tsx
-// HTMLのdata-panda-theme属性でテーマ切り替え
-<html data-panda-theme="konjo" />     // 紺青
-<html data-panda-theme="asagi" />     // 浅葱
-<html data-panda-theme="sumire" />    // 菫
-<html data-panda-theme="tsutsuji" />  // 躑躅
-<html data-panda-theme="kurikawa" />  // 栗皮
-```
-
-### システムトークンカテゴリ
-
-#### カラートークン例
-
-- `sd.system.color.impression.primary`
-- `sd.system.color.impression.primaryContainer`
-- `sd.system.color.impression.positive`
-- `sd.system.color.impression.positiveContainer`
-- `sd.system.color.impression.negative`
-- `sd.system.color.impression.negativeContainer`
-- `sd.system.color.surface.primary`
-- `sd.system.color.surface.secondary`
-
-#### タイポグラフィトークン（Compact/Expanded 対応）
-
-**Display（大見出し）**
-
-- `sd.system.typography.display.small_compact`
-- `sd.system.typography.display.medium_compact`
-- `sd.system.typography.display.small_expanded`
-- `sd.system.typography.display.medium_expanded`
-
-**Headline（見出し）**
-
-- `sd.system.typography.headline.small_compact`
-- `sd.system.typography.headline.medium_compact`
-- `sd.system.typography.headline.large_compact`
-- `sd.system.typography.headline.small_expanded`
-- `sd.system.typography.headline.medium_expanded`
-- `sd.system.typography.headline.large_expanded`
-
-**Title（タイトル）**
-
-- `sd.system.typography.title.small_compact`
-- `sd.system.typography.title.medium_compact`
-- `sd.system.typography.title.large_compact`
-- `sd.system.typography.title.small_expanded`
-- `sd.system.typography.title.medium_expanded`
-- `sd.system.typography.title.large_expanded`
-
-**Body（本文）**
-
-- `sd.system.typography.body.extraSmall_compact`
-- `sd.system.typography.body.small_compact`
-- `sd.system.typography.body.medium_compact`
-- `sd.system.typography.body.large_compact`
-- `sd.system.typography.body.extraSmall_expanded`
-- `sd.system.typography.body.small_expanded`
-- `sd.system.typography.body.medium_expanded`
-- `sd.system.typography.body.large_expanded`
-
-**Label（ラベル）**
-
-- `sd.system.typography.label.small_compact`
-- `sd.system.typography.label.medium_compact`
-- `sd.system.typography.label.large_compact`
-- `sd.system.typography.label.extraLarge_compact`
-- `sd.system.typography.label.small_expanded`
-- `sd.system.typography.label.medium_expanded`
-- `sd.system.typography.label.large_expanded`
-- `sd.system.typography.label.extraLarge_expanded`
-
-### CSS Variables 使用例
-
-```css
-@import "@serendie/design-token/tokens.css";
-
-h1 {
-  font-size: var(--sd-system-typography-headline-large-expanded);
-  color: var(--sd-system-color-impression-primary);
-}
-
-.button-primary {
-  background-color: var(--sd-system-color-impression-primaryContainer);
-  color: var(--sd-system-color-impression-onPrimaryContainer);
-}
-```
-
 ## 開発ガイドライン
 
 ### PandaCSS 使用時の注意点
@@ -494,14 +358,6 @@ h1 {
 3. **テーマ対応**: 5 つのカラーテーマに対応したコンポーネント設計
 4. **アクセシビリティ**: Serendie コンポーネントの標準的なアクセシビリティ機能を活用
 5. **Compact/Expanded**: レスポンシブデザインでタイポグラフィトークンを使い分け
-
-### 命名規則（デザイントークン）
-
-- 先頭小文字のキャメルケース（camelCase）
-- 頭文字にアラビア数字を避ける（`2extraSmall` → `twoExtraSmall`）
-- 省略記法を避ける（`xs` → `extraSmall`）
-- デバイス種別より画面幅に着目（`mobile` → `compact`）
-- プラットフォーム非依存の用語選択
 
 ### 推奨する使用パターン
 
@@ -557,4 +413,67 @@ function ResponsiveCard() {
     </CQ>
   );
 }
+```
+
+### インポート例
+
+```tsx
+// PandaCSS パターン
+import {
+  Box,
+  Container,
+  Stack,
+  HStack,
+  VStack,
+  Wrap,
+  Flex,
+  Grid,
+  GridItem,
+  Center,
+  AspectRatio,
+  Circle,
+  Square,
+  Divider,
+  VisuallyHidden,
+  Bleed,
+  Float,
+  LinkOverlay,
+  CQ,
+} from "../styled-system/jsx";
+
+// Serendie UI コンポーネント
+import {
+  Button,
+  IconButton,
+  TextField,
+  TextArea,
+  PasswordField,
+  Search,
+  Select,
+  CheckBox,
+  RadioButton,
+  RadioGroup,
+  Switch,
+  ChoiceBox,
+  Avatar,
+  Badge,
+  NotificationBadge,
+  Banner,
+  Toast,
+  ProgressIndicator,
+  BottomNavigation,
+  BottomNavigationItem,
+  TopAppBar,
+  Drawer,
+  Tabs,
+  TabItem,
+  Pagination,
+  Accordion,
+  AccordionGroup,
+  List,
+  ListItem,
+  DashboardWidget,
+  ModalDialog,
+  DropdownMenu,
+} from "@serendie/ui";
 ```

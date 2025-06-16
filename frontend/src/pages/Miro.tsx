@@ -74,6 +74,7 @@ const Miro: React.FC = () => {
           <Button onClick={() => navigate("/miro/typography")}>
             ✏️タイポグラフィ
           </Button>
+          <Button onClick={() => navigate("/miro/demo")}>✏️デモ</Button>
         </Center>
 
         <Divider />

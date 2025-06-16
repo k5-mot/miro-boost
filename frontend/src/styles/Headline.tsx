@@ -13,6 +13,7 @@ type HeadlineProps = {
   className?: string;
   as?: "h3" | "h4";
   style?: React.CSSProperties;
+  onClick?: (event: React.MouseEvent<HTMLElement>) => void;
 };
 
 /**
@@ -44,7 +45,11 @@ const Headline = (props: HeadlineProps): React.JSX.Element => {
   };
 
   return (
-    <Tag className={`headline ${props.className || ""}`} style={mergedStyle}>
+    <Tag
+      className={`headline ${props.className || ""}`}
+      style={mergedStyle}
+      onClick={props.onClick}
+    >
       {props.children}
     </Tag>
   );

@@ -8,11 +8,11 @@ const baseUrl = String(import.meta.env.VITE_PUBLIC_BACKEND_URL);
  */
 export const fetchAuthStatus = async (
   userId: string,
-  boardId: string
+  boardId: string,
 ): Promise<boolean | undefined> => {
   try {
     const response = await fetch(
-      `${baseUrl}/api/oauth/status?user_id=${encodeURIComponent(userId)}&board_id=${encodeURIComponent(boardId)}`
+      `${baseUrl}/api/oauth/status?user_id=${encodeURIComponent(userId)}&board_id=${encodeURIComponent(boardId)}`,
     );
     const responseBody: {
       user_id?: string;
@@ -36,11 +36,11 @@ export const fetchAuthStatus = async (
  */
 export const fetchAuthUrl = async (
   userId: string,
-  boardId: string
+  boardId: string,
 ): Promise<string | undefined> => {
   try {
     const response = await fetch(
-      `${baseUrl}/api/oauth/authorize?user_id=${encodeURIComponent(userId)}&board_id=${encodeURIComponent(boardId)}`
+      `${baseUrl}/api/oauth/authorize?user_id=${encodeURIComponent(userId)}&board_id=${encodeURIComponent(boardId)}`,
     );
     const responseBody: {
       auth_url?: string;
@@ -59,7 +59,7 @@ export const fetchLogout = async (): Promise<void> => {
       `${baseUrl}/api/oauth/revoke?user_id=${encodeURIComponent(userId)}`,
       {
         method: "POST",
-      }
+      },
     );
   } catch (e) {
     console.error("logout error", e);

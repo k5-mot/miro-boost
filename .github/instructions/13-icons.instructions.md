@@ -1,5 +1,5 @@
 ---
-applyTo: "frontend/**/*"
+applyTo: "frontend/src/**/*"
 ---
 
 # Serendie アイコンシステム（Serendie Symbols）ガイドライン

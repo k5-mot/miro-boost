@@ -1,5 +1,5 @@
 ---
-applyTo: "frontend/styles/**/*"
+applyTo: "frontend/src/styles/**/*"
 ---
 
 # Serendie Design Token ガイドライン

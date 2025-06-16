@@ -12,6 +12,7 @@ type LabelProps = {
   className?: string;
   as?: "label" | "small";
   style?: React.CSSProperties;
+  onClick?: (event: React.MouseEvent<HTMLElement>) => void;
 };
 
 /**
@@ -44,7 +45,11 @@ const Label = (props: LabelProps): React.JSX.Element => {
   };
 
   return (
-    <Tag className={`label ${props.className || ""}`} style={mergedStyle}>
+    <Tag
+      className={`label ${props.className || ""}`}
+      style={mergedStyle}
+      onClick={props.onClick}
+    >
       {props.children}
     </Tag>
   );

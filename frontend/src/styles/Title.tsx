@@ -13,6 +13,7 @@ type TitleProps = {
   className?: string;
   as?: "h5" | "h6";
   style?: React.CSSProperties;
+  onClick?: (event: React.MouseEvent<HTMLElement>) => void;
 };
 
 /**
@@ -44,7 +45,11 @@ const Title = (props: TitleProps): React.JSX.Element => {
   };
 
   return (
-    <Tag className={`title ${props.className || ""}`} style={mergedStyle}>
+    <Tag
+      className={`title ${props.className || ""}`}
+      style={mergedStyle}
+      onClick={props.onClick}
+    >
       {props.children}
     </Tag>
   );

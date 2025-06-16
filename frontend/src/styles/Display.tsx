@@ -13,6 +13,7 @@ type DisplayProps = {
   className?: string;
   as?: "h1" | "h2";
   style?: React.CSSProperties;
+  onClick?: (event: React.MouseEvent<HTMLElement>) => void;
 };
 
 /**
@@ -44,7 +45,11 @@ const Display = (props: DisplayProps): React.JSX.Element => {
   };
 
   return (
-    <Tag className={`display ${props.className || ""}`} style={mergedStyle}>
+    <Tag
+      className={`display ${props.className || ""}`}
+      style={mergedStyle}
+      onClick={props.onClick}
+    >
       {props.children}
     </Tag>
   );
