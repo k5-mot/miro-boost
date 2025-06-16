@@ -1,3 +1,7 @@
+---
+applyTo: "**/*"
+---
+
 ## 重要
 
 ユーザは Cline よりプログラミングが得意ですが、時短のために Cline にコーディングを依頼しています。
@@ -14,68 +18,70 @@
 
 ## プロジェクト概要
 
-Miro-boost は、Next.js+Miro WEB SDK で構築されたフロントエンドと、Python+FastAPI+Miro REST API で構築されたバックエンドで構成されるアプリケーションです。
+Miro-boost は、Vite+React+Miro WEB SDK で構築されたフロントエンドと、Python+FastAPI+Miro REST API で構築されたバックエンドで構成されるアプリケーションです。
 主に以下の技術スタックを使用しています：
 
 - フロントエンド
-  - Vite v6
-  - React v19
-  - TypeScript v5
-  - Prettier v3
-  - ESLint v9
+  - Vite v6.3.5
+  - React v19.1.0
+  - TypeScript v5.8.3
+  - Panda CSS v0.54.0
+  - Serendie Design System
+  - Mirotone v5
   - Miro WEB SDK
 - バックエンド
-  - Python
+  - Python 3.12+
   - uv
-  - FastAPI
-  - Miro REST API
+  - FastAPI v0.115.12
+  - LangChain v0.3.25
+  - Miro REST API v2.2.4
+  - AWS Bedrock / Google AI / OpenAI
 
-# 技術スタックとベストプラクティス
-
-## TypeScript 関連
-
-### 関数型アプローチ (FP)
-
-- 純粋関数を優先
-- 不変データ構造を使用
-- 副作用を分離
-- 型安全性を確保
-
-## プラクティス
-
-- 小さく始めて段階的に拡張
-- 過度な抽象化を避ける
-- コードよりも型を重視
-
-# プロジェクト構造
+## プロジェクト構造
 
 ./
 ├── backend/ # バックエンド
-│ ├── src/ # バックエンドのソースコード
-│ │ └── langchain-motex/ # 機能を実装したコンポーネント
-│ │ ├── base/ # Logger や.env 読み込みなどのユーティリティ
-│ │ ├── chain/ # LangChain で作成した LLM チェイン
-│ │ └── util/ # LLM チェインで使う関数群
-│ └── main.py # FastAPI のルーティングコード
+│ ├── main.py # FastAPI のエントリーポイント、ルーティング
+│ ├── pyproject.toml # Python プロジェクト設定とパッケージ依存関係
+│ ├── db/ # データベースファイル（SQLite）
+│ │ ├── session.json # セッション管理
+│ │ └── user_sessions.sqlite3 # ユーザーセッション DB
+│ └── package/ # バックエンドのソースコード
+│ ├── api/ # API エンドポイント
+│ │ ├── oauth.py # OAuth 認証
+│ │ ├── users.py # ユーザー管理
+│ │ ├── group.py # グループ機能
+│ │ ├── task.py # タスク機能
+│ │ └── sticky_note.py # 付箋機能
+│ ├── chain/ # LangChain の LLM チェイン
+│ ├── common/ # Logger や設定などの共通ユーティリティ
+│ ├── db/ # データベース関連
+│ └── util/ # その他ユーティリティ
 │
 └── frontend/ # フロントエンド
+├── package.json # Node.js プロジェクト設定とパッケージ依存関係
+├── vite.config.ts # Vite 設定
+├── panda.config.ts # Panda CSS 設定
 └── src/ # フロントエンドのソースコード
 ├── assets/ # 画像ファイルなどのリソース
 ├── components/ # 各ページで使用する大きめの UI 要素
-├── styles/ # Material UI の UI 要素のカスタム要素
-├── App.tsx # src/以下の\*.tsx は各ページを実装
-└── main.tsx # src/以下のページのルーティングを定義
+├── styles/ # Panda CSS/Serendie の UI 要素のカスタム要素
+├── pages/ # ページコンポーネント
+├── api/ # API 関連のユーティリティ
+├── util/ # 汎用ユーティリティ
+├── App.tsx # メインアプリケーションコンポーネント
+└── main.tsx # エントリーポイント、ルーティング定義
 
-# セキュリティガイドライン
+## セキュリティガイドライン
 
-## 機密ファイル
+### 機密ファイル
 
 以下のファイルの読み取りと変更を禁止：
 
 - .env ファイル
 - API キー、トークン、認証情報を含むすべてのファイル
 
-## セキュリティ対策
+### セキュリティ対策
 
 - 機密ファイルを絶対にコミットしない
 - シークレット情報は環境変数を使用する
