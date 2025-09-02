@@ -6,7 +6,7 @@
   "options": {
     "toolsToInstall": {
       "type": "string",
-      "default": "git-cz,npm-check-updates,@anthropic-ai/claude-code,@openai/codex",
+      "default": "npm,yarn,pnpm,git-cz,npm-check-updates",
       "description": "Comma-separated list of tools to install when 'installTools' is true. Defaults to a set of common Node.js tools."
     }
   },

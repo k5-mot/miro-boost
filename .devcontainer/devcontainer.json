@@ -3,7 +3,6 @@
 {
   "name": "dev",
   "image": "mcr.microsoft.com/devcontainers/base:bookworm",
-  // "dockerFile": "Dockerfile",
   "runArgs": [
     "--env-file",
     "./.devcontainer/devcontainer.env",
@@ -21,37 +20,39 @@
       "configureZshAsDefaultShell": true,
       "installOhMyZsh": true
     },
+    "ghcr.io/devcontainers-extra/features/zsh-plugins:0": {
+      "omzPlugins": "zsh-users/zsh-autosuggestions,zdharma-continuum/fast-syntax-highlighting,zdharma-continuum/history-search-multi-word,chrissicool/zsh-256color,supercrabtree/k,b4b4r07/emoji-cli"
+    },
     "ghcr.io/devcontainers/features/git:1": {},
     "ghcr.io/rocker-org/devcontainer-features/pandoc:1": {},
-    // "ghcr.io/devcontainers/features/aws-cli:1": {},
-    // "ghcr.io/devcontainers/features/azure-cli:1": {},
-    // "ghcr.io/joshuanianji/devcontainer-features/gcloud-cli-persistence:1": {},
-    // "ghcr.io/devcontainers/features/terraform:1": {
-    //   "version": "latest"
-    // },
+    "ghcr.io/devcontainers/features/aws-cli:1": {},
+    "ghcr.io/devcontainers/features/azure-cli:1": {},
+    "ghcr.io/joshuanianji/devcontainer-features/gcloud-cli-persistence:1": {},
+    "ghcr.io/devcontainers/features/terraform:1": {
+      "version": "latest"
+    },
     "ghcr.io/devcontainers/features/node:1": {
       "version": "22.16.0"
     },
     "./features/npm": {
       "version": "latest",
-      "toolsToInstall": "git-cz,npm-check-updates,@anthropic-ai/claude-code,@openai/codex"
+      "toolsToInstall": "npm,yarn,pnpm,git-cz,npm-check-updates,@anthropic-ai/claude-code,@openai/codex"
     },
-    // "ghcr.io/anthropics/devcontainer-features/claude-code:1.0": {},
-    // "ghcr.io/enricosecondulfo/devcontainer-features/volta:1": {
-    //   "version": "latest"
-    // },
     "ghcr.io/devcontainers/features/python:1": {
       "version": "3.12",
       "toolsToInstall": "pre-commit"
     },
-    "ghcr.io/jsburckhardt/devcontainer-features/uv:1": {
-      "version": "latest"
-    }
+    "ghcr.io/va-h/devcontainers-features/uv:1": {
+      "shellautocompletion": "true"
+    },
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/anthropics/devcontainer-features/claude-code:1.0": {}
   },
   "mounts": [
-    "source=${localEnv:HOME}/.aws,target=/home/vscode/.aws,type=bind,consistency=cached",
-    // "source=miro-boost-venv,target=${containerWorkspaceFolder}/backend/.venv,type=volume",
-    // "source=miro-boost-node,target=${containerWorkspaceFolder}/frontend/node_modules,type=volume"
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.aws,target=/home/vscode/.aws,type=bind,consistency=cached",
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.azure,target=/home/vscode/.azure,type=bind,consistency=cached"
+    // "source=${localEnv:USERPROFILE}/AppData/Roaming/gcloud,target=/home/vscode/.config/gcloud,type=bind,consistency=cached",
+    // "source=${localEnv:HOME}/.config/gcloud,target=/home/vscode/.config/gcloud,type=bind,consistency=cached"
   ],
   "containerUser": "vscode",
   "postCreateCommand": "bash ./.devcontainer/postCreate.sh",
@@ -64,7 +65,11 @@
         // ===============
         "VisualStudioExptTeam.vscodeintellicode", // Auto completion
         "ms-vsliveshare.vsliveshare", // Live Share
-        // "saoudrizwan.claude-dev", // Coding Agent by LLM
+        "saoudrizwan.claude-dev", // Coding Agent by LLM
+        "anthropic.claude-code", // Coding Assistants by LLM
+        "openai.chatgpt", // Coding Assistants by LLM
+        "github.copilot", // Coding Assistants by LLM
+        "github.copilot-chat", // Coding Assistants by LLM
         // "continue.continue", // Coding Assistants by LLM
         // ===============
         // Backend
