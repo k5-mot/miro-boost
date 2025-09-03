@@ -29,7 +29,7 @@ type FileDialogProps = {
   disabled?: boolean;
   /** 選択されたファイル情報を表示するかどうか */
   showFileInfo?: boolean;
-}
+};
 
 /**
  * ファイル選択ダイアログコンポーネント
