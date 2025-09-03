@@ -11,7 +11,7 @@ import { Button, List, ListItem, Divider } from "@serendie/ui";
 import { Container, Flex, Wrap } from "@styled-system/jsx";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchAuthStatus, fetchLogout } from "@/api/oauth";
+import { getAuthStatus, logout } from "@/api/auth/oauth";
 import "@/assets/style.css";
 import { Body, Headline } from "@/components/typography";
 
@@ -27,9 +27,7 @@ const AuthCheck: React.FC = () => {
       setBoardId((await miro.board.getInfo()).id);
     };
     const checkAuthStatus = async () => {
-      const userId = (await miro.board.getUserInfo()).id;
-      const boardId = (await miro.board.getInfo()).id;
-      const status = await fetchAuthStatus(userId, boardId);
+      const status = await getAuthStatus();
       if (status) {
         setIsAuthenticated(status);
       } else {
@@ -52,7 +50,7 @@ const AuthCheck: React.FC = () => {
         margin: 0,
         padding: 0,
         overflow: "auto",
-        backgroundImage: 'url("/portrait_auth.svg")',
+        backgroundImage: 'url("/portrait2.svg")',
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
@@ -90,7 +88,7 @@ const AuthCheck: React.FC = () => {
               size="small"
               onClick={() => {
                 const handleLogout = async () => {
-                  await fetchLogout()
+                  await logout()
                     .then(async () => {
                       console.info("Logged out successfully.");
                       await miro.board.ui.closePanel();

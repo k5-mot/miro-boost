@@ -2,11 +2,16 @@ import { ProgressIndicator } from "@serendie/ui";
 import { Container, Flex } from "@styled-system/jsx";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchAuthStatus } from "@/api/oauth";
+import { getAuthStatus } from "@/api/auth/oauth";
 import "@/assets/style.css";
 
 /**
- * Authentication Start Page.
+ * 認証開始画面.
+ *
+ * 0. AuthStart   : <-- いまここ.
+ * 1. AuthSignin  :
+ * 2. AuthSigned  :
+ * 3. AuthSignout :
  *
  * @returns {React.JSX.Element}
  */
@@ -25,9 +30,7 @@ const AuthStart: React.FC = (): React.JSX.Element => {
           void (async () => {
             let isAuthenticated: boolean | undefined = false;
             try {
-              const userId = (await miro.board.getUserInfo()).id;
-              const boardId = (await miro.board.getInfo()).id;
-              isAuthenticated = await fetchAuthStatus(userId, boardId);
+              isAuthenticated = await getAuthStatus();
             } catch (_e) {
               isAuthenticated = false;
             }

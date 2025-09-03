@@ -3,7 +3,7 @@ import { SerendieSymbolStickyNoteFilled } from "@serendie/symbols";
 import { Button, ModalDialog } from "@serendie/ui";
 import { Center, Box } from "@styled-system/jsx";
 import React, { useState } from "react";
-import { Body } from "@/styles";
+import { Body } from "@/components/typography";
 
 const fetchStickyNotes = async (): Promise<StickyNote[]> => {
   try {

@@ -7,11 +7,16 @@ import { Button, List, ListItem } from "@serendie/ui";
 import { Container, Flex } from "@styled-system/jsx";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchAuthUrl, fetchAuthStatus } from "@/api/oauth";
+import { getAuthUrl, getAuthStatus } from "@/api/auth/oauth";
 import "@/assets/style.css";
 import { Headline, Body } from "@/components/typography";
 
-const AuthSignin: React.FC = () => {
+/**
+ * Description placeholder
+ *
+ * @returns {React.JSX.Element}
+ */
+const AuthSignin: React.FC = (): React.JSX.Element => {
   const navigate = useNavigate();
   const [userId, setUserId] = React.useState<string>("");
   const [boardId, setBoardId] = React.useState<string>("");
@@ -23,9 +28,7 @@ const AuthSignin: React.FC = () => {
       setBoardId((await miro.board.getInfo()).id);
     };
     const checkAuthStatus = async () => {
-      const userId = (await miro.board.getUserInfo()).id;
-      const boardId = (await miro.board.getInfo()).id;
-      const status = await fetchAuthStatus(userId, boardId);
+      const status = await getAuthStatus();
       if (status) {
         setIsAuthenticated(status);
       } else {
@@ -38,9 +41,7 @@ const AuthSignin: React.FC = () => {
 
   const openAuthModal = async () => {
     console.log("Opening auth modal...");
-    const userId = (await miro.board.getUserInfo()).id;
-    const boardId = (await miro.board.getInfo()).id;
-    const authUrl = await fetchAuthUrl(userId, boardId);
+    const authUrl = await getAuthUrl();
     console.log(`authUrl: ${authUrl}`);
     if (authUrl) {
       const { waitForClose } = await miro.board.ui.openModal<string, string>({
@@ -52,9 +53,7 @@ const AuthSignin: React.FC = () => {
       await waitForClose()
         .then(async () => {
           console.info("Auth modal closed, checking auth status...");
-          const userId = (await miro.board.getUserInfo()).id;
-          const boardId = (await miro.board.getInfo()).id;
-          const status = await fetchAuthStatus(userId, boardId);
+          const status = await getAuthStatus();
           if (status) {
             setIsAuthenticated(status);
             console.log("User is authenticated.");
