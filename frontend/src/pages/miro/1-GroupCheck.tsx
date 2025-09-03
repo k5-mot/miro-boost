@@ -9,7 +9,7 @@ import {
 import { Button, Divider, List, ListItem } from "@serendie/ui";
 import { Container, Center, Wrap, Flex } from "@styled-system/jsx";
 import React from "react";
-import { Headline } from "@/styles";
+import { Headline } from "@/components/typography";
 import "@/assets/style.css";
 
 const MiroGroupCheck: React.FC = () => {

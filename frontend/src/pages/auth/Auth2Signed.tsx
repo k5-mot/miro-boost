@@ -2,9 +2,9 @@ import { ProgressIndicator } from "@serendie/ui";
 import { Container, Flex } from "@styled-system/jsx";
 import React, { useEffect } from "react";
 import "@/assets/style.css";
-import { Headline } from "@/styles";
+import { Headline } from "@/components/typography";
 
-const Signed: React.FC = () => {
+const AuthSigned: React.FC = () => {
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
     const start = Date.now();
@@ -73,4 +73,4 @@ const Signed: React.FC = () => {
     </Container>
   );
 };
-export default Signed;
+export default AuthSigned;

@@ -1,0 +1,21 @@
+@layer reset, base, tokens, recipes, utilities;
+@import "@serendie/ui/styles.css";
+@import "@serendie/design-token/tokens.css";
+
+/* @import "mirotone/dist/styles.css"; */
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family:
+    Roboto,
+    "Noto Sans JP",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Noto Sans Mono",
+    sans-serif;
+}

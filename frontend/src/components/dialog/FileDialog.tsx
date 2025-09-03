@@ -3,7 +3,7 @@ import { Button, ModalDialog, ListItem, List } from "@serendie/ui";
 import { css } from "@styled-system/css";
 import { VStack, HStack } from "@styled-system/jsx";
 import React, { useRef, useState } from "react";
-import { Label } from "@/styles";
+import { Label } from "@/components/typography";
 
 /**
  * FileDialogコンポーネントのプロパティ

@@ -6,8 +6,8 @@ import { Divider, IconButton, TextArea, TextField } from "@serendie/ui";
 import { Container, Center } from "@styled-system/jsx";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import FileDialog from "@/components/FileDialog";
-import { Headline, Body, Title } from "@/styles";
+import FileDialog from "@/components/dialog/FileDialog";
+import { Headline, Body, Title } from "@/components/typography";
 import "@/assets/style.css";
 
 const Demo: React.FC = () => {

@@ -13,9 +13,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchAuthStatus, fetchLogout } from "@/api/oauth";
 import "@/assets/style.css";
-import { Body, Headline } from "@/styles";
+import { Body, Headline } from "@/components/typography";
 
-const Check: React.FC = () => {
+const AuthCheck: React.FC = () => {
   const navigate = useNavigate();
   const [userId, setUserId] = React.useState<string>("");
   const [boardId, setBoardId] = React.useState<string>("");
@@ -171,4 +171,4 @@ const Check: React.FC = () => {
     </Container>
   );
 };
-export default Check;
+export default AuthCheck;

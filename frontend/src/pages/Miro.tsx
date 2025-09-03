@@ -1,19 +1,22 @@
 import {
   SerendieSymbolPlaceholder,
   SerendieSymbolFlag,
-  SerendieSymbolGear,
-  SerendieSymbolQuestion,
+  // SerendieSymbolGear,
+  // SerendieSymbolQuestion,
 } from "@serendie/symbols";
-import { Button, Divider, IconButton, ModalDialog } from "@serendie/ui";
+import { Button, Divider } from "@serendie/ui";
+// import { IconButton, ModalDialog } from "@serendie/ui";
 import { Container, Center, Wrap } from "@styled-system/jsx";
-import React, { useState } from "react";
+import React from "react";
+// import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Title, Headline } from "@/styles";
+import { Title, Label } from "@/components/typography";
+// import { Headline } from "@/components/typography";
 import "@/assets/style.css";
 
 const Miro: React.FC = () => {
   const navigate = useNavigate();
-  const [isOpenModal, setIsOpenModal] = useState(false);
+  // const [isOpenModal, setIsOpenModal] = useState(false);
 
   React.useEffect(() => {}, []);
 
@@ -36,7 +39,7 @@ const Miro: React.FC = () => {
           position="relative"
           width="100%"
         >
-          <IconButton
+          {/* <IconButton
             icon={<SerendieSymbolGear />}
             shape="circle"
             styleType="outlined"
@@ -46,12 +49,13 @@ const Miro: React.FC = () => {
             }}
             aria-label="戻る"
             style={{ position: "absolute", left: 10 }}
-          />
+          /> */}
           <Center flexDirection="row" alignItems="center" gap={12} width="100%">
-            <img src="/icon.svg" alt="Miro-Boost" width="10%" />
-            <Headline variant="small">Miro Boost</Headline>
+            <img src="/logo.png" alt="Miro-Boost" width="90%" />
+            {/* <img src="/icon.svg" alt="Miro-Boost" width="10%" /> */}
+            {/* <Headline variant="small">Miro Boost</Headline> */}
           </Center>
-          <IconButton
+          {/* <IconButton
             icon={<SerendieSymbolQuestion />}
             shape="circle"
             styleType="outlined"
@@ -61,16 +65,17 @@ const Miro: React.FC = () => {
             }}
             aria-label="ヘルプ"
             style={{ position: "absolute", right: 10 }}
-          />
+          /> */}
         </Center>
         <Divider />
 
-        <Center flexDirection="column" width="100%" gap={8} paddingY={8}>
+        <Center flexDirection="column" width="80%" gap={8} paddingY={8}>
           <Title>生成AI機能</Title>
           <Button
             onClick={() => {
               void navigate("/miro/group");
             }}
+            style={{ width: "100%" }}
           >
             🤖セマンティックグルーピング
           </Button>
@@ -78,6 +83,7 @@ const Miro: React.FC = () => {
             onClick={() => {
               void navigate("/miro/task");
             }}
+            style={{ width: "100%" }}
           >
             📝タスク切り出し
           </Button>
@@ -85,6 +91,7 @@ const Miro: React.FC = () => {
             onClick={() => {
               void navigate("/miro/typography");
             }}
+            style={{ width: "100%" }}
           >
             ✏️タイポグラフィ
           </Button>
@@ -92,6 +99,7 @@ const Miro: React.FC = () => {
             onClick={() => {
               void navigate("/miro/demo");
             }}
+            style={{ width: "100%" }}
           >
             ✏️デモ
           </Button>
@@ -123,7 +131,34 @@ const Miro: React.FC = () => {
           </Wrap>
         </Center>
 
-        <ModalDialog
+        <Center flexDirection="column" width="100%" gap={8} paddingY={8}>
+          <Title>お問い合わせ2</Title>
+          <Wrap gap={12} align="center" justify="center">
+            <Button
+              // leftIcon={<SerendieSymbolFlag />}
+              size="small"
+              // styleType="ghost"
+              styleType="rectangle"
+              onClick={() => {
+                void navigate("/auth/check");
+              }}
+            >
+              トラブルシューティング
+            </Button>
+            <Label variant="small">・</Label>
+            <Button
+              // leftIcon={<SerendieSymbolPlaceholder />}
+              size="small"
+              // styleType="ghost"
+              styleType="rectangle"
+              onClick={() => {}}
+            >
+              TBD
+            </Button>
+          </Wrap>
+        </Center>
+
+        {/* <ModalDialog
           cancelButtonLabel="閉じる"
           submitButtonLabel="詳細"
           title="ヘルプ"
@@ -140,7 +175,7 @@ const Miro: React.FC = () => {
           reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
           pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
           culpa qui officia deserunt mollit anim id est laborum.
-        </ModalDialog>
+        </ModalDialog> */}
       </Center>
     </Container>
   );

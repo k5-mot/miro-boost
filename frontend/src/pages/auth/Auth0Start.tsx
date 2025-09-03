@@ -5,7 +5,12 @@ import { useNavigate } from "react-router-dom";
 import { fetchAuthStatus } from "@/api/oauth";
 import "@/assets/style.css";
 
-const Miro: React.FC = () => {
+/**
+ * Authentication Start Page.
+ *
+ * @returns {React.JSX.Element}
+ */
+const AuthStart: React.FC = (): React.JSX.Element => {
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -78,4 +83,4 @@ const Miro: React.FC = () => {
     </Container>
   );
 };
-export default Miro;
+export default AuthStart;

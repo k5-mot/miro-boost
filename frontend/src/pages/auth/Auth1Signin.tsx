@@ -9,9 +9,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchAuthUrl, fetchAuthStatus } from "@/api/oauth";
 import "@/assets/style.css";
-import { Headline, Body } from "@/styles";
+import { Headline, Body } from "@/components/typography";
 
-const Signin: React.FC = () => {
+const AuthSignin: React.FC = () => {
   const navigate = useNavigate();
   const [userId, setUserId] = React.useState<string>("");
   const [boardId, setBoardId] = React.useState<string>("");
@@ -58,7 +58,7 @@ const Signin: React.FC = () => {
           if (status) {
             setIsAuthenticated(status);
             console.log("User is authenticated.");
-            await navigate("/splash");
+            await navigate("/auth/start");
           } else {
             setIsAuthenticated(false);
             console.log("User is not authenticated.");
@@ -152,4 +152,4 @@ const Signin: React.FC = () => {
     </Container>
   );
 };
-export default Signin;
+export default AuthSignin;

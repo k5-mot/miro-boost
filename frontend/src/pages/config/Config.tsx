@@ -13,7 +13,7 @@ import {
 import { Container, Center } from "@styled-system/jsx";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Title, Headline, Body } from "@/styles";
+import { Title, Headline, Body } from "@/components/typography";
 import "@/assets/style.css";
 
 const Config: React.FC = (): React.JSX.Element => {

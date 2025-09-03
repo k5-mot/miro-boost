@@ -6,7 +6,7 @@ import { Divider, IconButton } from "@serendie/ui";
 import { Container, Center } from "@styled-system/jsx";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Headline, Body, Label, Display, Title } from "@/styles";
+import { Headline, Body, Label, Display, Title } from "@/components/typography";
 import "@/assets/style.css";
 
 const MiroTypography: React.FC = () => {

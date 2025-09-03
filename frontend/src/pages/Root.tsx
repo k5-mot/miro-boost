@@ -2,9 +2,10 @@ import { SerendieSymbolLink } from "@serendie/symbols";
 import { ProgressIndicator, Button } from "@serendie/ui";
 import { Container, Flex } from "@styled-system/jsx";
 import React from "react";
+import { Headline } from "@/components/typography";
 import "@/assets/style.css";
 
-const App: React.FC = (): React.JSX.Element => {
+const Root: React.FC = (): React.JSX.Element => {
   const [isPanelOpen, setIsPanelOpen] = React.useState(false);
   // // Open the Top page.
   React.useEffect(() => {
@@ -13,7 +14,7 @@ const App: React.FC = (): React.JSX.Element => {
       if (canOpenPanel) {
         setIsPanelOpen(true);
         void miro.board.ui.on("icon:click", () => {
-          void miro.board.ui.openPanel({ url: "/splash" });
+          void miro.board.ui.openPanel({ url: "/auth/start" });
         });
       }
     };
@@ -62,12 +63,12 @@ const App: React.FC = (): React.JSX.Element => {
           />
           {isPanelOpen ? (
             <>
-              <h3>アプリを起動中です...</h3>
+              <Headline variant="medium">アプリを起動中です...</Headline>
               <ProgressIndicator size="large" color="white" />
             </>
           ) : (
             <>
-              <h3>Miroではないようです...</h3>
+              <Headline variant="medium">Miroではないようです...</Headline>
               <Button
                 styleType="filled"
                 size="medium"
@@ -85,4 +86,4 @@ const App: React.FC = (): React.JSX.Element => {
   );
 };
 
-export default App;
+export default Root;

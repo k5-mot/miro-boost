@@ -9,7 +9,7 @@ import { Button, Divider, IconButton } from "@serendie/ui";
 import { Container, Center } from "@styled-system/jsx";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Body, Headline } from "@/styles";
+import { Body, Headline } from "@/components/typography";
 import "@/assets/style.css";
 
 const baseUrl = String(import.meta.env.VITE_PUBLIC_BACKEND_URL);
