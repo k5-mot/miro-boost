@@ -1,8 +1,8 @@
-import path from "path";
-import fs from "fs";
-import dns from "dns";
-import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import dns from "dns";
+import fs from "fs";
+import path from "path";
+import { defineConfig } from "vite";
 
 // https://vitejs.dev/config/server-options.html#server-host
 dns.setDefaultResultOrder("verbatim");

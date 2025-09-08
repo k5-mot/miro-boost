@@ -1,8 +1,9 @@
-import { StickyNote } from "@mirohq/websdk-types";
+import type { StickyNote } from "@mirohq/websdk-types";
 import { SerendieSymbolStickyNoteFilled } from "@serendie/symbols";
 import { Button, ModalDialog } from "@serendie/ui";
-import { Center, Box } from "@styled-system/jsx";
-import React, { useState } from "react";
+import { Box, Center } from "@styled-system/jsx";
+import type React from "react";
+import { useState } from "react";
 import { Body } from "@/components/typography";
 
 const fetchStickyNotes = async (): Promise<StickyNote[]> => {

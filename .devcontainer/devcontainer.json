@@ -35,7 +35,7 @@
     },
     "./features/npm": {
       "version": "latest",
-      "toolsToInstall": "npm,yarn,pnpm,git-cz,npm-check-updates,@anthropic-ai/claude-code,@openai/codex"
+      "toolsToInstall": "npm,yarn,pnpm,@biomejs/biome@2.2.3,git-cz,npm-check-updates,@anthropic-ai/claude-code,@openai/codex"
     },
     "ghcr.io/devcontainers/features/python:1": {
       "version": "3.12",
@@ -77,8 +77,9 @@
         // ==============
         // Frontend
         // ==============
-        "dbaeumer.vscode-eslint", // Linter
-        "esbenp.prettier-vscode", // Formatter
+        // "dbaeumer.vscode-eslint", // Linter
+        // "esbenp.prettier-vscode", // Formatter
+        "biomejs.biome", // Linter/Formatter
         "xabikos.JavaScriptSnippets", // Snippets for JavaScript
         // "yoavbls.pretty-ts-errors", // Pretty Error messages for Typescript
         "crystal-spider.jsdoc-generator", // JSDoc generator

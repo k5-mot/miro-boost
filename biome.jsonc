@@ -1,0 +1,232 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.2.3/schema.json",
+  // Git統合設定
+  "vcs": {
+    "enabled": true, // VCS統合を有効化
+    "clientKind": "git", // Gitを使用
+    "useIgnoreFile": true // .gitignoreファイルを尊重
+  },
+  // ファイル処理設定
+  "files": {
+    "ignoreUnknown": false // 未知のファイル拡張子を無視しない
+  },
+  // Formatter設定
+  "formatter": {
+    "enabled": true, // フォーマッターを有効化
+    "formatWithErrors": false, // エラーがある場合はフォーマットしない
+    "indentStyle": "space", // スペースでインデント
+    "indentWidth": 2, // インデント幅: 2スペース
+    "lineEnding": "lf", // 改行コード: LF
+    "lineWidth": 80, // 行の最大幅: 80文字
+    "attributePosition": "auto", // HTML属性の位置を自動調整
+    "bracketSameLine": false, // 開始ブラケットを同じ行に配置しない
+    "bracketSpacing": true, // ブラケット内にスペースを入れる
+    "expand": "auto", // 要素の展開を自動で判断
+    "useEditorconfig": true // .editorconfigファイルの設定を使用
+  },
+  // Linter設定
+  "linter": {
+    "enabled": true, // リンターを有効化
+    "rules": {
+      "recommended": false, // 推奨ルールを無効(個別設定を優先)
+      // 複雑性関連のルール
+      "complexity": {
+        "noUselessTypeConstraint": "error" // 無意味な型制約を禁止
+      },
+      // 正しさ関連のルール
+      "correctness": {
+        "noUnusedVariables": "error", // 未使用変数を禁止
+        "noUnusedImports": "error" // 未使用インポートを禁止
+      },
+      // スタイル関連のルール
+      "style": {
+        "noCommonJs": "error", // CommonJS記法を禁止
+        "noNamespace": "error", // namespace記法を禁止
+        "useArrayLiterals": "error", // Array()よりも[]記法を推奨
+        "useAsConstAssertion": "error", // as constアサーションを推奨
+        "useBlockStatements": "off", // ブロック文の強制を無効
+        "useImportType": "error", // 型のみのインポートでtype修飾子を強制
+        "useNodejsImportProtocol": "off" // Node.js import protocolは無効
+      },
+      // 疑わしいコード関連のルール
+      "suspicious": {
+        "noExplicitAny": "error", // 明示的なany型を禁止
+        "noExtraNonNullAssertion": "error", // 不要な!アサーションを禁止
+        "noMisleadingInstantiator": "error", // 誤解を招くインスタンス化を禁止
+        "noUnsafeDeclarationMerging": "error", // 安全でない宣言のマージを禁止
+        "useAwait": "error", // Promiseをawaitせずに使用することを禁止
+        "useNamespaceKeyword": "error" // namespaceキーワードの使用を推奨
+      }
+    }
+  },
+  // JavaScript向けの設定
+  "javascript": {
+    "formatter": {
+      "jsxQuoteStyle": "double", // JSXでダブルクォートを使用
+      "quoteProperties": "asNeeded", // 必要な場合のみプロパティをクォート
+      "trailingCommas": "all", // 末尾カンマを常に付ける
+      "semicolons": "always", // セミコロンを常に付ける
+      "arrowParentheses": "always", // アロー関数の引数を常に括弧で囲む
+      "bracketSameLine": false, // JSXの開始タグを同じ行に配置しない
+      "quoteStyle": "double", // ダブルクォートを使用
+      "attributePosition": "auto", // JSX属性の位置を自動調整
+      "bracketSpacing": true // オブジェクトのブラケット内にスペース
+    },
+    // グローバル変数の定義(Miro WebSDKとNode.js環境用)
+    "globals": [
+      "miro", // Miro WebSDK のグローバルオブジェクト(@mirohq/websdk-types対応)
+      "process", // Node.js process オブジェクト
+      "Buffer", // Node.js Buffer オブジェクト
+      "__dirname", // Node.js __dirname 変数
+      "__filename" // Node.js __filename 変数
+    ]
+  },
+  // HTML設定
+  "html": {
+    "formatter": {
+      "selfCloseVoidElements": "always" // void要素を常に自己終了タグに
+    }
+  },
+  // JSON設定
+  "json": {
+    "formatter": {
+      "enabled": false, // JSONフォーマッターを無効化(他ツールに任せる)
+      "indentStyle": "space", // スペースでインデント
+      "indentWidth": 2, // インデント幅: 2スペース
+      "lineWidth": 80 // 行の最大幅: 80文字
+    }
+  },
+  // CSS設定
+  "css": {
+    "formatter": {
+      "enabled": true, // CSSフォーマッターを有効化
+      "indentStyle": "space", // スペースでインデント
+      "indentWidth": 2, // インデント幅: 2スペース
+      "lineWidth": 80 // 行の最大幅: 80文字
+    }
+  },
+  // ファイルタイプ別のオーバーライド設定
+  "overrides": [
+    {
+      // 基本的な対象ファイル
+      "includes": [
+        "**/*.js", // JavaScriptファイル
+        "**/*.jsx", // React JSXファイル
+        "**/*.ts", // TypeScriptファイル
+        "**/*.tsx" // React TSXファイル
+      ]
+    },
+    {
+      // ビルド/設定/依存関連ファイルを除外
+      "includes": [
+        "**/*.cjs", // CommonJSモジュール
+        "**/*.mjs", // CommonJS/ES6モジュール
+        "**/build/", // ビルド出力ディレクトリ
+        "**/bin/", // バイナリ出力ディレクトリ
+        "**/dist/", // 配布用ディレクトリ
+        "**/obj/", // オブジェクトファイルディレクトリ
+        "**/out/", // 出力ディレクトリ
+        "**/.vite/", // Vite一時ディレクトリ
+        "**/coverage/", // カバレッジ出力ディレクトリ
+        "**/.next/", // Next.js出力ディレクトリ
+        "**/node_modules/", // 依存モジュールディレクトリ
+        "**/styled-system/", // styled-system自動生成ディレクトリ
+        "**/public/storybook/", // Storybook自動生成ディレクトリ
+        "**/.astro/", // Astro設定ディレクトリ
+        "**/.husky/", // Husky設定ディレクトリ
+        "**/.storybook/", // Storybook設定ディレクトリ
+        "**/env.d.ts", // Vite環境定義ファイル
+        "**/vite.config.*", // Vite設定ファイル
+        "**/vitest.config.*" // Vitest設定ファイル
+      ],
+      "linter": {
+        "enabled": false
+      },
+      "formatter": {
+        "enabled": false
+      }
+    },
+    // React JSX/TSX固有の設定
+    {
+      "includes": [
+        "**/*.jsx",
+        "**/*.tsx"
+      ],
+      "javascript": {
+        "globals": []
+      },
+      "linter": {
+        "rules": {
+          "correctness": {
+            "useExhaustiveDependencies": "warn", // React Hook依存関係の網羅性チェック(React 18対応)
+            "useHookAtTopLevel": "error" // Hookはトップレベルでのみ使用
+          },
+          "a11y": {
+            "useButtonType": "error" // button要素にtype属性を強制(アクセシビリティ強化)
+          }
+        }
+      }
+    },
+    // TypeScript固有の設定
+    {
+      "includes": [
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.mts",
+        "**/*.cts"
+      ],
+      "linter": {
+        "rules": {
+          "complexity": {
+            "noArguments": "error" // argumentsオブジェクトの使用を禁止(ES6+ 推奨)
+          },
+          "correctness": {
+            "noUnusedVariables": "warn", // TypeScriptでは未使用変数を警告レベルに緩和
+            // TypeScript環境ではJavaScriptのビルトインチェックを無効化(TypeScript自体がチェック)
+            "noConstAssign": "off", // constの再代入チェックを無効
+            "noGlobalObjectCalls": "off", // グローバルオブジェクト呼び出しチェックを無効
+            "noInvalidBuiltinInstantiation": "off", // 無効なビルトインインスタンス化チェックを無効
+            "noInvalidConstructorSuper": "off", // 無効なsuperコンストラクタチェックを無効
+            "noSetterReturn": "off", // setterの返り値チェックを無効
+            "noUndeclaredVariables": "off", // 未宣言変数チェックを無効
+            "noUnreachable": "off", // 到達不可能コードチェックを無効
+            "noUnreachableSuper": "off" // 到達不可能superチェックを無効
+          },
+          "style": {
+            "useConst": "error", // letよりconstを推奨
+            "useConsistentArrayType": {
+              "level": "error",
+              "options": {
+                // "syntax": "generic" // Array<T>記法を強制(@types/react対応)
+                "syntax": "shorthand" // T[] 記法を強制
+              }
+            }
+          },
+          "suspicious": {
+            // TypeScript環境ではJavaScriptのチェックを無効化(TypeScript自体がチェック)
+            "noClassAssign": "off", // クラスの再代入チェックを無効
+            "noDuplicateClassMembers": "off", // 重複クラスメンバーチェックを無効
+            "noDuplicateObjectKeys": "off", // 重複オブジェクトキーチェックを無効
+            "noDuplicateParameters": "off", // 重複パラメータチェックを無効
+            "noFunctionAssign": "off", // 関数の再代入チェックを無効
+            "noImportAssign": "off", // インポートの再代入チェックを無効
+            "noRedeclare": "off", // 再宣言チェックを無効
+            "noUnsafeNegation": "off", // 安全でない否定チェックを無効
+            "noVar": "error", // var宣言を禁止(ES6+ const/let推奨)
+            "noWith": "off", // with文チェックを無効
+            "useGetterReturn": "off" // getterの返り値チェックを無効
+          }
+        }
+      }
+    }
+  ],
+  // IDE支援機能の設定
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": "on" // インポートの自動整理を有効(typescript-eslintのimport/order相当)
+      }
+    }
+  }
+}

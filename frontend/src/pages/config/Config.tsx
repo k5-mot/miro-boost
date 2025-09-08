@@ -10,10 +10,10 @@ import {
   Tabs,
   TextField,
 } from "@serendie/ui";
-import { Container, Center } from "@styled-system/jsx";
+import { Center, Container } from "@styled-system/jsx";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Title, Headline, Body } from "@/components/typography";
+import { Body, Headline, Title } from "@/components/typography";
 import "@/assets/style.css";
 
 const Config: React.FC = (): React.JSX.Element => {

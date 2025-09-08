@@ -4,9 +4,8 @@ import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-# from starlette.middleware.sessions import SessionMiddleware
-from package.api import group, oauth, sticky_note, task, users
-from package.common import get_logger, get_settings
+from miro_boost.api import group, oauth, sticky_note, task, users
+from miro_boost.common import get_logger, get_settings
 
 settings = get_settings()
 logger = get_logger()
@@ -43,7 +42,7 @@ app.add_middleware(
 app.include_router(users.router, tags=["Users"], prefix="/api/users")
 app.include_router(oauth.router, tags=["OAuth"], prefix="/api/oauth")
 app.include_router(
-    sticky_note.router, tags=["Miro", "StickyNote"], prefix="/api/miro/sticky_note"
+    sticky_note.router, tags=["Miro", "StickyNote"], prefix="/api/miro/sticky_note",
 )
 app.include_router(group.router, tags=["Miro", "Group"], prefix="/api/miro/group")
 app.include_router(task.router, tags=["Miro", "Task"], prefix="/api/miro/task")

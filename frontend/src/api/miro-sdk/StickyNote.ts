@@ -1,4 +1,4 @@
-import { StickyNote } from "@mirohq/websdk-types";
+import type { StickyNote } from "@mirohq/websdk-types";
 
 export const fetchStickyNotes = async (): Promise<StickyNote[]> => {
   try {

@@ -1,0 +1,12 @@
+<svg width="172" height="172" viewBox="0 0 172 172" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="172" height="172" rx="16" fill="#F0F0F0"/>
+<g style="mix-blend-mode:multiply">
+<path d="M112.212 87.377L81.989 87.377V140.106L112.212 140.106L112.212 87.377Z" fill="#3B86F9"/>
+</g>
+<g style="mix-blend-mode:multiply">
+<ellipse cx="66.305" cy="59.4017" rx="36.9105" ry="36.9105" fill="#007882"/>
+</g>
+<g style="mix-blend-mode:multiply">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M111.542 74.4696C121.443 77.1227 131.621 71.2467 134.274 61.3451L147.312 64.8389C142.73 81.9415 125.151 92.0909 108.048 87.5083C90.9453 82.9257 80.7958 65.3463 85.3785 48.2437L98.4172 51.7374C95.7641 61.6389 101.64 71.8164 111.542 74.4696Z" fill="#B36CCD"/>
+</g>
+</svg>

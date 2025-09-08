@@ -1,0 +1,6 @@
+{
+  // 共通設定
+  "extends": [
+    "../biome.jsonc"
+  ]
+}

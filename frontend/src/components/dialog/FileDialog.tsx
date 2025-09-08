@@ -1,8 +1,9 @@
 import { SerendieSymbolFile } from "@serendie/symbols";
-import { Button, ModalDialog, ListItem, List } from "@serendie/ui";
+import { Button, List, ListItem, ModalDialog } from "@serendie/ui";
 import { css } from "@styled-system/css";
-import { VStack, HStack } from "@styled-system/jsx";
-import React, { useRef, useState } from "react";
+import { HStack, VStack } from "@styled-system/jsx";
+import type React from "react";
+import { useRef, useState } from "react";
 import { Label } from "@/components/typography";
 
 /**
