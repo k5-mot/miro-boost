@@ -2,23 +2,26 @@ import {
   SerendieSymbolFlag,
   SerendieSymbolPlaceholder,
 } from "@serendie/symbols";
-import { Button, Divider,Tabs,TabItem } from "@serendie/ui";
+import { Button, Divider, TabItem, Tabs } from "@serendie/ui";
 import { Center, Container, Wrap } from "@styled-system/jsx";
-import React ,{useState}from "react";
+import type React from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {  Title } from "@/components/typography";
+import { Title } from "@/components/typography";
 import "@/assets/style.css";
 import logo from "@/assets/logo.png";
-
+import DemoTab from "@/features/Miro/DemoTab";
+import GenericTab from "@/features/Miro/GenericTab";
+import ScrumTab from "@/features/Miro/ScrumTab";
 
 const Miro: React.FC = () => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeTab, setActiveTab] = useState("generic");
 
-    const tabs = [
-    { label: 'タブ1', content: <div>内容1</div> },
-    { label: 'タブ2', content: <div>内容2</div> },
-    { label: 'タブ3', content: <div>内容3</div> },
+  const tabs = [
+    { title: "汎用機能", value: "generic", component: <GenericTab /> },
+    { title: "スクラム機能", value: "scrum", component: <ScrumTab /> },
+    { title: "デモ機能", value: "demo", component: <DemoTab /> },
   ];
 
   return (
@@ -31,11 +34,6 @@ const Miro: React.FC = () => {
         overflow: "auto",
       }}
     >
-      <Tabs>
-        <TabItem title="ホーム" value="home" />
-        <TabItem title="生成AI機能" value="ai" />
-        <TabItem title="お問い合わせ" value="contact" />
-      </Tabs>
       <Center flexDirection="column" width="100%" gap={8} paddingY={8}>
         <Center
           flexDirection="row"
@@ -52,41 +50,24 @@ const Miro: React.FC = () => {
 
         <Divider />
 
+        <Tabs
+          defaultValue="generic"
+          style={{ width: "100%" }}
+          onValueChange={(details) => {
+            const selectedTab = details.value;
+            console.debug("Switch tab:", selectedTab);
+            setActiveTab(selectedTab);
+          }}
+        >
+          {tabs.map((tab) => (
+            <TabItem key={tab.value} title={tab.title} value={tab.value} />
+          ))}
+        </Tabs>
+
+        <Divider />
+
         <Center flexDirection="column" width="80%" gap={8} paddingY={8}>
-          <Title>生成AI機能</Title>
-          <Button
-            onClick={() => {
-              void navigate("/miro/group");
-            }}
-            style={{ width: "100%" }}
-          >
-            🤖セマンティックグルーピング
-          </Button>
-          <Button
-            leftIcon={<SerendieSymbolPlaceholder/>}
-            onClick={() => {
-              void navigate("/miro/task");
-            }}
-            style={{ width: "100%" }}
-          >
-            📝タスク切り出し
-          </Button>
-          <Button
-            onClick={() => {
-              void navigate("/miro/typography");
-            }}
-            style={{ width: "100%" }}
-          >
-            ✏️タイポグラフィ
-          </Button>
-          <Button
-            onClick={() => {
-              void navigate("/miro/demo");
-            }}
-            style={{ width: "100%" }}
-          >
-            ✏️デモ
-          </Button>
+          {tabs.find((tab) => tab.value === activeTab)?.component ?? null}
         </Center>
 
         <Divider />
@@ -114,7 +95,6 @@ const Miro: React.FC = () => {
             </Button>
           </Wrap>
         </Center>
-
       </Center>
     </Container>
   );

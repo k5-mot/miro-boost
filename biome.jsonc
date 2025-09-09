@@ -22,7 +22,7 @@
     "bracketSameLine": false, // 開始ブラケットを同じ行に配置しない
     "bracketSpacing": true, // ブラケット内にスペースを入れる
     "expand": "auto", // 要素の展開を自動で判断
-    "useEditorconfig": true // .editorconfigファイルの設定を使用
+    "useEditorconfig": false // .editorconfigファイルの設定を使用しない（Biome設定を優先）
   },
   // Linter設定
   "linter": {
@@ -70,6 +70,7 @@
       "bracketSameLine": false, // JSXの開始タグを同じ行に配置しない
       "quoteStyle": "double", // ダブルクォートを使用
       "attributePosition": "auto", // JSX属性の位置を自動調整
+      "indentStyle": "space", // スペースでインデント
       "bracketSpacing": true // オブジェクトのブラケット内にスペース
     },
     // グローバル変数の定義(Miro WebSDKとNode.js環境用)

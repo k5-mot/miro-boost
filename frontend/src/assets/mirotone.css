@@ -3,20 +3,20 @@
 *,
 *:before,
 *:after {
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-	display: flex;
+  display: flex;
 }
 
 #root {
-	width: 100%;
-	overflow: auto;
-	padding: var(--space-medium);
+  width: 100%;
+  overflow: auto;
+  padding: var(--space-medium);
 }
 
 img {
-	max-width: 100%;
-	height: auto;
+  max-width: 100%;
+  height: auto;
 }
